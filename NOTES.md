@@ -34,6 +34,8 @@ $ openssl rand -base64 32
 
 ```bash
 $ npm i --save @nestjs/config
+$ npm install --save joi
+$ npm i --save class-validator class-transformer
 ```
 
 ```ts

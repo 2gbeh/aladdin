@@ -12,6 +12,7 @@ import { UsersModule } from '../users/users.module';
     PassportModule,
     JwtModule.register({
       secret: process.env.SESSION_SECRET!,
+      secretOrPrivateKey: process.env.SESSION_SECRET!,
       signOptions: { expiresIn: '7d' },
     }),
     UsersModule,
