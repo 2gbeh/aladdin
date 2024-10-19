@@ -26,11 +26,11 @@ $ cd aladdin
 # $ npm install --legacy-peer-deps
 $ npm install
 
--> Update .env credentials
+-> Create and update .env credentials
 
 $ npm run start:dev
 
--> Visit http://127.0.0.1:3000
+-> Visit http://127.0.0.1:8000
 ```
 
 ## API Docs
