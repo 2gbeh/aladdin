@@ -35,22 +35,20 @@ $ openssl rand -base64 32
 ```bash
 $ npm i --save @nestjs/config
 $ npm install --save joi
-$ npm i --save class-validator class-transformer
 ```
 
 ```ts
-// ./src/app.module.ts
-import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+// ./src/validation/env.validation.ts
 
-@Module({
-  imports: [
-    ConfigModule.forRoot({
-      isGlobal: true,
-    }),
-  ],
-})
-export class AppModule {}
+import * as Joi from 'joi';
+
+export const envValidationSchema = Joi.object({
+  NODE_ENV: Joi.string().valid('development', 'production', 'test').default('development'),
+  PORT: Joi.number().default(3000),
+  JWT_SECRET: Joi.string().required(),
+  POSTGRES_PRISMA_URL: Joi.string().uri().required(),
+  POSTGRES_URL_NON_POOLING: Joi.string().uri().required(),
+});
 ```
 
 ## [Render](https://dashboard.render.com/web/srv-cs9ddnrqf0us739et8eg/settings)

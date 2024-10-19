@@ -4,7 +4,6 @@ export const envValidationSchema = Joi.object({
   NODE_ENV: Joi.string().valid('development', 'production', 'test').default('development'),
   PORT: Joi.number().default(3000),
   JWT_SECRET: Joi.string().required(),
-  // Add other environment variables and their validation rules here
   POSTGRES_PRISMA_URL: Joi.string().uri().required(),
   POSTGRES_URL_NON_POOLING: Joi.string().uri().required(),
 });
