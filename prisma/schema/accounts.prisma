@@ -1,0 +1,22 @@
+model Account {
+  id           Int           @id @default(autoincrement())
+  avatar       String?       @db.VarChar
+  name         String        @unique @db.VarChar
+  displayName  String?       @db.VarChar
+  phone        String?       @db.VarChar
+  bio          String?       @db.VarChar
+  isFavorite   Boolean       @default(false) @db.Boolean
+  isPrivate    Boolean       @default(false) @db.Boolean
+  // common
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  deletedAt    DateTime?
+  // relations
+  biils        Bill[]
+  transactions Transaction[]
+  tenant       User          @relation(fields: [tenantId], references: [id])
+  tenantId     String        @db.Uuid
+
+  @@index([displayName])
+  @@map("fedora_accounts")
+}

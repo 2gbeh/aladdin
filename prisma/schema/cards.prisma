@@ -1,0 +1,19 @@
+model Card {
+  id           Int           @id @default(autoincrement())
+  logo         String?       @db.VarChar
+  name         String        @unique @db.VarChar
+  displayName  String?       @db.VarChar
+  cardNumber   String?       @db.VarChar
+  color        String?       @db.VarChar
+  // common
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  deletedAt    DateTime?
+  // relations
+  transactions Transaction[]
+  tenant       User          @relation(fields: [tenantId], references: [id])
+  tenantId     String        @db.Uuid
+
+  @@index([displayName])
+  @@map("fedora_cards")
+}

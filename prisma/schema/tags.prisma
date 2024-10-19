@@ -1,0 +1,15 @@
+model Tag {
+  id           Int           @id @default(autoincrement())
+  name         String        @unique @db.VarChar
+  description  String?       @db.VarChar
+  // common
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  deletedAt    DateTime?
+  // relations
+  transactions Transaction[]
+  tenant       User          @relation(fields: [tenantId], references: [id])
+  tenantId     String        @db.Uuid
+
+  @@map("fedora_tags")
+}

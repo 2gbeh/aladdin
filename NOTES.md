@@ -1,5 +1,24 @@
 # Notes
 
+## Features
+
+```md
+- search, sort and filters
+- soft-delete
+- multi-tenancy
+- dark mode
+- masked mode
+- # prototype mode
+- # incognito mode
+- oauth (google, github)
+- # biometic login (fingerprint)
+- paystack wallet
+- # recurring TR
+- # draft TR
+- # budget
+- analytics
+```
+
 ## Setup
 
 ```bash
@@ -11,6 +30,7 @@ $ npm run start:dev
 ```
 
 ## [Swagger](https://docs.nestjs.com/openapi/introduction)
+
 ```bash
 $ npm install --save @nestjs/swagger
 ```
@@ -43,7 +63,9 @@ $ npm install --save joi
 import * as Joi from 'joi';
 
 export const envValidationSchema = Joi.object({
-  NODE_ENV: Joi.string().valid('development', 'production', 'test').default('development'),
+  NODE_ENV: Joi.string()
+    .valid('development', 'production', 'test')
+    .default('development'),
   PORT: Joi.number().default(3000),
   JWT_SECRET: Joi.string().required(),
   POSTGRES_PRISMA_URL: Joi.string().uri().required(),
@@ -67,4 +89,28 @@ $ npm run start:prod
 $ npm install prisma --save-dev
 $ npx prisma init
 $ npm install @prisma/client
+
+# SOLID https://www.prisma.io/blog/organize-your-prisma-schema-with-multi-file-support
+```
+
+## Entities
+
+```md
+- # auth
+- users
+- cards
+- accounts
+- categories
+- tags
+- transactions
+- bills
+- preferences
+```
+
+## Relations
+
+```md
+- Users <> Preferences (one-to-one)
+- Accounts <> Bills (one-to-many)
+- Transactions <> Tags (many-to-many)
 ```

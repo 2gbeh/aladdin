@@ -1,0 +1,27 @@
+model User {
+  id           String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  avatar       String?       @db.VarChar
+  username     String        @unique @db.VarChar
+  email        String        @unique @db.VarChar
+  password     String        @db.VarChar
+  pin          Int?          @db.Integer
+  biometric    Json?
+  otp          Int?          @db.Integer
+  balance      Decimal       @default(0.00) @db.Money
+  notes        Json? // userAgent, lastLogonDate
+  verifiedAt   DateTime?
+  // common
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  deletedAt    DateTime?
+  // relations
+  accounts     Account[]
+  biils        Bill[]
+  cards        Card[]
+  preference   Preference?
+  tags         Tag[]
+  transactions Transaction[]
+
+  @@index([username])
+  @@map("fedora_users")
+}

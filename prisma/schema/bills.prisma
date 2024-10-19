@@ -1,0 +1,20 @@
+model Bill {
+  id          Int       @id @default(autoincrement())
+  item        String    @db.VarChar
+  description String?   @db.VarChar
+  qty         Int       @default(1) @db.Integer
+  price       Decimal   @default(0.00) @db.Money
+  paidAt      DateTime?
+  // common
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  deletedAt   DateTime?
+  // relations
+  account     Account   @relation(fields: [accountId], references: [id])
+  accountId   Int
+  tenant      User      @relation(fields: [tenantId], references: [id])
+  tenantId    String    @db.Uuid
+
+  @@index([item])
+  @@map("fedora_bills")
+}

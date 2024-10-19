@@ -1,0 +1,25 @@
+model Transaction {
+  id              Int             @id @default(autoincrement())
+  type            TransactionType @default(DEBIT)
+  amount          Decimal         @default(0.00) @db.Money
+  outstanding     Decimal         @default(0.00) @db.Money
+  narration       String?         @db.VarChar
+  repeatsPerMonth Int             @default(0) @db.Integer
+  is_draft        Boolean         @default(false) @db.Boolean
+  // common
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  deletedAt       DateTime?
+  // relations
+  account         Account         @relation(fields: [accountId], references: [id])
+  accountId       Int
+  card            Card            @relation(fields: [cardId], references: [id])
+  cardId          Int
+  category        Category        @relation(fields: [categoryId], references: [id])
+  categoryId      Int
+  tags            Tag[]
+  tenant          User            @relation(fields: [tenantId], references: [id])
+  tenantId        String          @db.Uuid
+
+  @@map("fedora_transactions")
+}

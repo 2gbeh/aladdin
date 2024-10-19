@@ -1,0 +1,7 @@
+model Category {
+  id          Int     @id @default(autoincrement())
+  name        String  @unique @db.VarChar
+  description String? @db.VarChar
+
+  @@map("fedora_categories")
+}
