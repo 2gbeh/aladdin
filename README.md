@@ -22,13 +22,15 @@ $ git clone https://github.com/2gbeh/aladdin.git
 
 $ cd aladdin
 
-# npm cache clean --force
-# npm install --legacy-peer-deps
+# $ npm cache clean --force
+# $ npm install --legacy-peer-deps
 $ npm install
+
+-> Update .env credentials
 
 $ npm run start:dev
 
-# http://127.0.0.1:3000
+-> Visit http://127.0.0.1:3000
 ```
 
 ## API Docs
