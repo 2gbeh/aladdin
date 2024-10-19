@@ -4,8 +4,8 @@ model User {
   username     String        @unique @db.VarChar
   email        String        @unique @db.VarChar
   password     String        @db.VarChar
-  pin          Int?          @db.Integer
-  biometric    Json?
+  pin          String?       @db.VarChar
+  biometrics   Json?
   otp          Int?          @db.Integer
   balance      Decimal       @default(0.00) @db.Money
   notes        Json? // userAgent, lastLogonDate
@@ -23,5 +23,5 @@ model User {
   transactions Transaction[]
 
   @@index([username])
-  @@map("fedora_users")
+  @@map("users")
 }

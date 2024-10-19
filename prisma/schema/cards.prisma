@@ -11,9 +11,9 @@ model Card {
   deletedAt    DateTime?
   // relations
   transactions Transaction[]
-  tenant       User          @relation(fields: [tenantId], references: [id])
-  tenantId     String        @db.Uuid
+  tenant       User?          @relation(fields: [tenantId], references: [id])
+  tenantId     String?        @db.Uuid
 
   @@index([displayName])
-  @@map("fedora_cards")
+  @@map("cards")
 }

@@ -9,7 +9,7 @@ async function bootstrap() {
   const port = configService.get<number>('PORT', 3000);
   //
   const config = new DocumentBuilder()
-    .setTitle('Aladdin 🚀')
+    .setTitle('Aladdin')
     .setDescription('Expense Tracker REST API')
     .setVersion('1.0')
     .build();

@@ -19,7 +19,7 @@
 - analytics
 ```
 
-## Setup
+## Installation
 
 ```bash
 $ npm i -g @nestjs/cli@latest
@@ -28,6 +28,21 @@ $ nest new aladdin
 $ cd aladdin
 $ npm run start:dev
 ```
+
+### Setup
+
+```bash
+$ git clone https://github.com/2gbeh/aladdin.git
+$ cd aladdin
+$ npm cache clean --force
+
+# or npm install --legacy-peer-deps
+$ npm install
+
+$ npm run start:dev
+```
+
+> Server running on http://127.0.0.1:3000
 
 ## [Swagger](https://docs.nestjs.com/openapi/introduction)
 
@@ -43,6 +58,7 @@ $ npm install --save-dev @types/passport-local
 $ npm install --save @nestjs/jwt passport-jwt
 $ npm install --save-dev @types/passport-jwt
 
+# *Pluralize resources where applicable
 $ nest g resource api/auth --no-spec
 $ nest g resource api/users --no-spec
 
@@ -91,6 +107,40 @@ $ npx prisma init
 $ npm install @prisma/client
 
 # SOLID https://www.prisma.io/blog/organize-your-prisma-schema-with-multi-file-support
+
+# Push local schema changes (Ex. --name `migration_name`)
+$ npx prisma migrate dev --name init
+
+# Pull local schema changes
+$ npx prisma generate
+
+# SEED https://www.prisma.io/docs/orm/prisma-migrate/workflows/seeding#integrated-seeding-with-prisma-migrate
+
+$ npx prisma db seed
+```
+
+```prisma
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["prismaSchemaFolder", "relationJoins", "omitApi"]
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL") // uses connection pooling
+  directUrl = env("DATABASE_URL_NON_POOLING") // uses a direct connection
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+```
+
+## [Supabase](https://supabase.com/dashboard/project/gfkkemdbbevelampyzcj/database/tables)
+
+```bash
+# Visit above link
 ```
 
 ## Entities

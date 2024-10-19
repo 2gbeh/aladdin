@@ -6,6 +6,13 @@ import { UsersModule } from './api/users/users.module';
 import { AuthModule } from './api/auth/auth.module';
 import { envValidationSchema } from './validation';
 import { JwtAuthGuard } from './guards';
+import { CategoriesModule } from './api/categories/categories.module';
+import { CardsModule } from './api/cards/cards.module';
+import { AccountsModule } from './api/accounts/accounts.module';
+import { TagsModule } from './api/tags/tags.module';
+import { TransactionsModule } from './api/transactions/transactions.module';
+import { BillsModule } from './api/bills/bills.module';
+import { PreferencesModule } from './api/preferences/preferences.module';
 
 @Module({
   imports: [
@@ -16,6 +23,13 @@ import { JwtAuthGuard } from './guards';
     }),
     UsersModule,
     AuthModule,
+    CategoriesModule,
+    CardsModule,
+    AccountsModule,
+    TagsModule,
+    TransactionsModule,
+    BillsModule,
+    PreferencesModule,
   ],
   providers: [
     {

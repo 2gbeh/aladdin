@@ -16,5 +16,5 @@ model Bill {
   tenantId    String    @db.Uuid
 
   @@index([item])
-  @@map("fedora_bills")
+  @@map("bills")
 }

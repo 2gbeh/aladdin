@@ -11,5 +11,5 @@ model Tag {
   tenant       User          @relation(fields: [tenantId], references: [id])
   tenantId     String        @db.Uuid
 
-  @@map("fedora_tags")
+  @@map("tags")
 }

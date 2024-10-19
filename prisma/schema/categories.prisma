@@ -1,7 +1,9 @@
 model Category {
-  id          Int     @id @default(autoincrement())
-  name        String  @unique @db.VarChar
-  description String? @db.VarChar
+  id           Int           @id @default(autoincrement())
+  name         String        @unique @db.VarChar
+  description  String?       @db.VarChar
+  // relations
+  transactions Transaction[]
 
-  @@map("fedora_categories")
+  @@map("categories")
 }

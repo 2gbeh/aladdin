@@ -18,5 +18,5 @@ model Account {
   tenantId     String        @db.Uuid
 
   @@index([displayName])
-  @@map("fedora_accounts")
+  @@map("accounts")
 }
