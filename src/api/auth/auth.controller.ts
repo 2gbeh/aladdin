@@ -1,17 +1,15 @@
 import { Controller, Post, Get, UseGuards, Request } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { AuthService } from './auth.service';
 //
-import { LocalAuthGuard, JwtAuthGuard } from '@/guards';
-import { Unprotected } from '@/decorators';
+import { LocalAuthGuard, JwtAuthGuard } from '@/shared/guards';
+import { Unprotected } from '@/shared/decorators';
 
 @Controller('auth')
 export class AuthController {
   constructor(
     private configService: ConfigService,
     private jwtService: JwtService,
-    private readonly authService: AuthService,
   ) {}
 
   @Unprotected()

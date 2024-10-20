@@ -2,17 +2,19 @@ import { APP_GUARD } from '@nestjs/core';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 //
-import { UsersModule } from './api/users/users.module';
+import { envValidationSchema } from './shared/validation';
+import { JwtAuthGuard } from './shared/guards';
+import { PrismaService } from './shared/services';
+//
 import { AuthModule } from './api/auth/auth.module';
-import { envValidationSchema } from './validation';
-import { JwtAuthGuard } from './guards';
-import { CategoriesModule } from './api/categories/categories.module';
-import { CardsModule } from './api/cards/cards.module';
+import { UsersModule } from './api/users/users.module';
+import { PreferencesModule } from './api/preferences/preferences.module';
 import { AccountsModule } from './api/accounts/accounts.module';
+import { CardsModule } from './api/cards/cards.module';
+import { CategoriesModule } from './api/categories/categories.module';
 import { TagsModule } from './api/tags/tags.module';
 import { TransactionsModule } from './api/transactions/transactions.module';
 import { BillsModule } from './api/bills/bills.module';
-import { PreferencesModule } from './api/preferences/preferences.module';
 
 @Module({
   imports: [
@@ -21,21 +23,22 @@ import { PreferencesModule } from './api/preferences/preferences.module';
       expandVariables: true,
       validationSchema: envValidationSchema,
     }),
-    UsersModule,
     AuthModule,
-    CategoriesModule,
-    CardsModule,
+    UsersModule,
+    PreferencesModule,
     AccountsModule,
+    CardsModule,
+    CategoriesModule,
     TagsModule,
     TransactionsModule,
     BillsModule,
-    PreferencesModule,
   ],
   providers: [
     {
       provide: APP_GUARD,
       useClass: JwtAuthGuard,
     },
+    PrismaService,
   ],
 })
 export class AppModule {}
