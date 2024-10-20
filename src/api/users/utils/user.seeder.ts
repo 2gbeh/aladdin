@@ -1,7 +1,11 @@
 import { PrismaClient } from '@prisma/client';
+import { hash } from 'bcryptjs';
+// 
+import { AppHelper } from '@/utils/app.helper';
 
 export async function userSeeder(prisma: PrismaClient) {
   try {
+    const hashedPassword = await hash('secret', 10);
     const res = await prisma.user.upsert({
       where: { username: '2gbeh' },
       update: {},
@@ -9,10 +13,10 @@ export async function userSeeder(prisma: PrismaClient) {
         avatar: 'https://github.com/2gbeh.png',
         username: '2gbeh',
         email: 'dehphantom@yahoo.com',
-        password: 'secret',
-        pin: '4444',
+        password: hashedPassword,
+        pin: '3142',
         otp: 12345,
-        verifiedAt: new Date().toJSON(),
+        verifiedAt: AppHelper.dt,
         preference: {
           create: {
             darkMode: true,

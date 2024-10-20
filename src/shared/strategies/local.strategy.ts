@@ -15,7 +15,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     username: string,
     password: string,
   ): Promise<any> {
-    const user = await this.authService.login({
+    const user = await this.authService.authenticate({
       device: req.body?.device,
       email: username,
       password,
