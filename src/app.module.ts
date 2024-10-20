@@ -15,6 +15,7 @@ import { CategoriesModule } from './api/categories/categories.module';
 import { TagsModule } from './api/tags/tags.module';
 import { TransactionsModule } from './api/transactions/transactions.module';
 import { BillsModule } from './api/bills/bills.module';
+import { WipModule } from './api/wip/wip.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { BillsModule } from './api/bills/bills.module';
     TagsModule,
     TransactionsModule,
     BillsModule,
+    WipModule,
   ],
   providers: [
     {
