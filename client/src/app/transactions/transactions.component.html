@@ -1,0 +1,18 @@
+<h1>Transactions Page</h1>
+
+@if (data().length<1){ <h2>Loading...</h2>}
+
+  <ul>
+    @for (item of data(); track item.id) {
+    <li>
+      <a [routerLink]="[item.userId]">
+        (U{{item.userId}})
+        {{ item.title }}
+        <input type="checkbox" [checked]="item.completed" readonly />
+      </a>
+    </li>
+    }
+  </ul>
+
+
+  <button (click)="gotoDashboard()">Back to Dashboard</button>

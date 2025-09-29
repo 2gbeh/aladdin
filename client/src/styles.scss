@@ -1,0 +1,52 @@
+/* You can add global styles to this file, and also import other style files */
+:root {
+  --brand: #c3002f;
+  --contrast: #00c394;
+  --neutral: #eaeaea;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+h1 {}
+
+h2 {}
+
+h3 {}
+
+h4 {}
+
+h5 {}
+
+h6 {}
+
+p {}
+
+strong {}
+
+small {}
+
+a {
+  color: var(--brand);
+  text-decoration: underline;
+
+  &:hover {
+    color: var(--contrast);
+    cursor: pointer;
+  }
+}
