@@ -1,18 +1,24 @@
 import { Routes } from '@angular/router';
-// Routes
+import { PATH } from '@/constants/PATH';
+// 
 import { transactionsRoute } from './transactions/transactions.route';
-// Pages
 import { LoginComponent } from './login/login.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 
 export const appRoutes: Routes = [
   {
-    path: 'login',
+    path: PATH.login,
     redirectTo: '',
   },
   {
-    path: 'dashboard',
+    path: PATH.forgotPassword,
+    component: ForgotPasswordComponent,
+    title: 'Forgot Password',
+  },
+  {
+    path: PATH.dashboard,
     component: DashboardComponent,
     title: 'Dashboard',
   },

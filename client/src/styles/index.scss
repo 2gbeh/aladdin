@@ -1,9 +1,9 @@
-@import 'theme.style.scss';
-@import 'dimension.style.scss';
-@import 'typography.style.scss';
-@import 'flex.style.scss';
-@import 'grid.style.scss';
-@import 'material.style.scss';
+@use 'theme.style' as *;
+@use 'dimension.style' as *;
+@use 'typography.style' as *;
+@use 'flex.style' as *;
+@use 'grid.style' as *;
+@use 'material.style' as *;
 
 * {
   box-sizing: border-box;

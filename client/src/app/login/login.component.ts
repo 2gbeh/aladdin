@@ -1,5 +1,5 @@
-import { Component, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, signal, inject } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 // 
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { PATH } from '@/constants/PATH';
 
 const name = 'login'
 
@@ -29,6 +30,7 @@ const name = 'login'
   ],
 })
 export class LoginComponent {
+  private router = inject(Router);
   hide = signal(true);
 
   form = new FormGroup({
@@ -45,5 +47,10 @@ export class LoginComponent {
   clickEvent(event: MouseEvent) {
     this.hide.set(!this.hide());
     event.stopPropagation();
+  }
+
+  handleSignIn() {
+    // TODO: Replace with real auth submission when ready
+    this.router.navigateByUrl(PATH.dashboard);
   }
 }

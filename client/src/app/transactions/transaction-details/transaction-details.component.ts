@@ -23,7 +23,7 @@ export class TransactionDetailsComponent {
     this.route.paramMap.pipe(
       // paramMap is an observable → extract the id
       switchMap((params) => {
-        const userId = Number(params.get('id'));
+        const userId = Number(params.get('identifier'));
         
         if (!userId) throw new Error('Invalid id in route');
         

@@ -2,15 +2,15 @@ import { Component, input, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-create-transaction',
+  selector: 'app-edit-transaction',
   imports: [],
-  templateUrl: './create-transaction.component.html',
-  styleUrl: './create-transaction.component.scss'
+  templateUrl: './edit-transaction.component.html',
+  styleUrl: './edit-transaction.component.scss'
 })
-export class CreateTransactionComponent {
+export class EditTransactionComponent {
   private router = inject(Router);
 
-  id = input.required<string>();
+  identifier = input.required<string>();
 
   goBack() {
     this.router.navigate(['/transactions']);
