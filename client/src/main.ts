@@ -3,7 +3,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { RouterOutlet, provideRouter, TitleStrategy, withComponentInputBinding } from '@angular/router';
 import { bootstrapApplication } from '@angular/platform-browser';
 // 
-import { CustomTitleStrategy } from '@/strategies/custom-title.strategy';
+import { CustomTitleStrategy } from '@/shared/strategies/custom-title.strategy';
 import { appRoutes } from './app/app.routes';
 
 @Component({
