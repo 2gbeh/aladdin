@@ -3,7 +3,7 @@ import { Router, RouterLink } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { catchError } from 'rxjs';
 //
-import { TodosService } from '@/services/todos/todos.service';
+import { TodosService } from '@/store/services/todos/todos.service';
 
 @Component({
   selector: 'app-transactions',

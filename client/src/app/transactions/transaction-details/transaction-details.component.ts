@@ -3,8 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { catchError, switchMap } from 'rxjs';
 //
-import { TodosService } from '@/services/todos/todos.service';
-import { ITodo } from '@/services/todos/todos.types';
+import { TodosService } from '@/store/services/todos/todos.service';
+import { ITodo } from '@/store/services/todos/todos.types';
 
 @Component({
   selector: 'app-transaction-details',

@@ -1,9 +1,9 @@
-/* You can add global styles to this file, and also import other style files */
-:root {
-  --brand: #c3002f;
-  --contrast: #00c394;
-  --neutral: #eaeaea;
-}
+@import 'theme.style.scss';
+@import 'dimension.style.scss';
+@import 'typography.style.scss';
+@import 'flex.style.scss';
+@import 'grid.style.scss';
+@import 'material.style.scss';
 
 * {
   box-sizing: border-box;
@@ -21,6 +21,22 @@ html {
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0
+}
+
+hgroup {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.25rem;
 }
 
 .debug {

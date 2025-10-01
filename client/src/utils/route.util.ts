@@ -1,4 +1,4 @@
-import { APP } from "@/shared/constants/APP";
+import { APP } from "@/constants/APP";
 
 export const RouteUtil = {
   title(title?: string) {

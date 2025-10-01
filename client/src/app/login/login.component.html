@@ -1,8 +1,11 @@
-<div class="container">
-  <div class="content">
-    <h2>Sign in</h2>
+<div class="container height-full flex-center-center">
+  <div class="content width-sm flex-column">
+    <hgroup>
+      <h2>Welcome back,</h2>
+      <p>Please sign in to your account</p>
+    </hgroup>
     <form>
-      <mat-form-field class="form-control">
+      <mat-form-field>
         <mat-label>Enter your email</mat-label>
         <input type="email" matInput [formControl]="form.controls.email" placeholder="Ex. pat@example.com">
         @if (form.controls.email.hasError('email') && !form.controls.email.hasError('required')) {
@@ -13,9 +16,10 @@
         }
       </mat-form-field>
 
-      <mat-form-field class="form-control">
+      <mat-form-field>
         <mat-label>Enter your password</mat-label>
-        <input [type]="hide() ? 'password' : 'text'" matInput [formControl]="form.controls.password" placeholder="**** ****">
+        <input [type]="hide() ? 'password' : 'text'" matInput [formControl]="form.controls.password"
+          placeholder="**** ****">
         <button mat-icon-button matSuffix (click)="clickEvent($event)" [attr.aria-label]="'Hide password'"
           [attr.aria-pressed]="hide()">
           <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
@@ -26,9 +30,15 @@
         @if (form.controls.password.hasError('required')) {
         <mat-error>Password is <strong>required</strong></mat-error>
         }
-      </mat-form-field>   
+      </mat-form-field>
 
-      <button mat-flat-button class="btn">Continue</button>
+      <div class="flex-center-between">
+        <mat-checkbox>Remember me</mat-checkbox>
+        <a mat-button routerLink="/forgot-password">Forgot password?</a>
+      </div>
+
+      <div>&nbsp;</div>
+      <button mat-flat-button>Sign in</button>
     </form>
   </div>
 </div>
