@@ -1,10 +1,28 @@
-<h1>Dashboard Page</h1>
-
-<ul>
-  <li>
-    <a routerLink="/">Sign out</a>
-  </li>
-  <li>
-    <a routerLink="/transactions">Transactions</a>
-  </li>
-</ul>
+<mat-toolbar class="flex-center-between">
+  <section class="flex-center">
+    <button matIconButton class="example-icon" aria-label="Toggle sidenav" (click)="toggleSidenav()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span>My App</span>
+  </section>
+  <section class="flex-center">
+    <button matIconButton class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+      <mat-icon>favorite</mat-icon>
+    </button>
+    <button matIconButton class="example-icon" aria-label="Example icon-button with share icon">
+      <mat-icon>share</mat-icon>
+    </button>
+  </section>
+</mat-toolbar>
+@if (shouldRun) {
+  <mat-sidenav-container class="container" #sidenavContainer>
+    <mat-sidenav #sidenav mode="side" opened>
+      Sidenav content
+    </mat-sidenav>
+    <mat-sidenav-content>
+      Main content
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+} @else {
+  <div>Please open on Stackblitz to see result</div>
+}
