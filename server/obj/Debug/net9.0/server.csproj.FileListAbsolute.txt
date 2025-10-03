@@ -31,3 +31,7 @@ C:\Users\User\Documents\www\aladdin\server\obj\Debug\net9.0\refint\server.dll
 C:\Users\User\Documents\www\aladdin\server\obj\Debug\net9.0\server.pdb
 C:\Users\User\Documents\www\aladdin\server\obj\Debug\net9.0\server.genruntimeconfig.cache
 C:\Users\User\Documents\www\aladdin\server\obj\Debug\net9.0\ref\server.dll
+C:\Users\User\Documents\www\aladdin\server\bin\Debug\net9.0\FluentValidation.dll
+C:\Users\User\Documents\www\aladdin\server\bin\Debug\net9.0\FluentValidation.DependencyInjectionExtensions.dll
+C:\Users\User\Documents\www\aladdin\server\bin\Debug\net9.0\MediatR.dll
+C:\Users\User\Documents\www\aladdin\server\bin\Debug\net9.0\MediatR.Contracts.dll
