@@ -1,3 +1,4 @@
+import { Identifier } from '@/types/common.type';
 import { Component, input, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -10,7 +11,7 @@ import { Router } from '@angular/router';
 export class EditTransactionComponent {
   private router = inject(Router);
 
-  identifier = input.required<string>();
+  identifier = input.required<Identifier>();
 
   goBack() {
     this.router.navigate(['/transactions']);

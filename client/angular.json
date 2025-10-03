@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "nggc": {
+    "aladdin": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/nggc",
+            "outputPath": "dist/aladdin",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -63,12 +63,15 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "port": 3000
+          },
           "configurations": {
             "production": {
-              "buildTarget": "nggc:build:production"
+              "buildTarget": "aladdin:build:production"
             },
             "development": {
-              "buildTarget": "nggc:build:development"
+              "buildTarget": "aladdin:build:development"
             }
           },
           "defaultConfiguration": "development"

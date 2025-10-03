@@ -1,3 +1,5 @@
+import { Identifier } from "@/types/common.type";
+
 export const PATH = {
   // Auth
   login: 'login',
@@ -7,6 +9,6 @@ export const PATH = {
   // Transactions
   transactions: 'transactions',
   createTransaction: 'transactions/create',
-  transactionDetails: (id: string) => `transactions/${id}`,
-  editTransaction: (id: string) => `transactions/${id}/edit`,
+  transactionDetails: (identifier: Identifier) => `transactions/${identifier}`,
+  editTransaction: (identifier: Identifier) => `transactions/${identifier}/edit`,
 } as const
