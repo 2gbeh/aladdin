@@ -2,10 +2,12 @@ using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using Microsoft.EntityFrameworkCore;
 using server.Api.Common.Conventions;
 using server.Api.Common.Routing;
 using server.Application.Common.Behaviors;
 using server.Application.WeatherForecasts.Queries;
+using server.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,6 +34,21 @@ builder.Services.AddValidatorsFromAssemblyContaining<GetWeatherForecastQuery>();
 // MediatR Pipeline Behaviors
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
+
+// EF Core - AppDbContext with MySQL (Pomelo)
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<AppDbContext>(options =>
+{
+    if (string.IsNullOrWhiteSpace(connectionString))
+    {
+        throw new InvalidOperationException("Connection string 'DefaultConnection' is not configured.");
+    }
+
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString), mySqlOptions =>
+    {
+        mySqlOptions.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName);
+    });
+});
 
 var app = builder.Build();
 

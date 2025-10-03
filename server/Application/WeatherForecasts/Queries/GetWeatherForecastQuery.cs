@@ -1,32 +1,58 @@
 using MediatR;
+using server.Shared.Dtos;
 using server.Domain.Entities;
 
 namespace server.Application.WeatherForecasts.Queries;
 
-public sealed record GetWeatherForecastQuery(DateOnly? Date) : IRequest<IEnumerable<WeatherForecast>>;
+public sealed record GetWeatherForecastQuery(WeatherForecastQueryParams Params) : IRequest<IEnumerable<WeatherForecastDto>>;
 
-public sealed class GetWeatherForecastQueryHandler : IRequestHandler<GetWeatherForecastQuery, IEnumerable<WeatherForecast>>
+public sealed class GetWeatherForecastQueryHandler : IRequestHandler<GetWeatherForecastQuery, IEnumerable<WeatherForecastDto>>
 {
-    private static readonly string[] Summaries = new[]
+    public Task<IEnumerable<WeatherForecastDto>> Handle(GetWeatherForecastQuery req, CancellationToken cancellationToken)
     {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
+        var forecasts = GenerateForecasts();
 
-    public Task<IEnumerable<WeatherForecast>> Handle(GetWeatherForecastQuery request, CancellationToken cancellationToken)
-    {
-        var result = Enumerable.Range(1, 30).Select(index =>
-            new WeatherForecast(
-                DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                Random.Shared.Next(-20, 55),
-                Summaries[Random.Shared.Next(Summaries.Length)]
-            )
-        );
-
-        if (request.Date.HasValue)
+        if (req.Params.Date.HasValue)
         {
-            result = result.Where(x => x.Date == request.Date.Value);
+            forecasts = forecasts.Where(w => w.Date == req.Params.Date.Value);
         }
 
+        var result = forecasts.Select(s => new WeatherForecastDto(
+            s.Date,
+            s.TemperatureC,
+            s.TemperatureF,
+            s.Summary
+        ));
+
         return Task.FromResult(result);
+    }
+
+    private static IEnumerable<WeatherForecast> GenerateForecasts()
+    {
+        var summaries = new[]
+        {
+            "Freezing", "Bracing", "Chilly", "Cool",
+            "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+        };
+
+        var daysLeft = GetDaysLeftInWeek();
+        var random = new Random();
+
+        return Enumerable.Range(0, daysLeft).Select(i =>
+        {
+            var date = DateOnly.FromDateTime(DateTime.Now.AddDays(i));           
+            var temperatureC = random.Next(-20, 55);           
+            var s = random.Next(summaries.Length);
+            var summary = summaries[s];
+
+            return new WeatherForecast(date, temperatureC, summary);
+        });
+    }
+
+    private static int GetDaysLeftInWeek()
+    {
+        var today = DateTime.Now.DayOfWeek;
+        var daysUntilEndOfWeek = DayOfWeek.Saturday - today;
+        return daysUntilEndOfWeek == 0 ? 1 : daysUntilEndOfWeek + 1;
     }
 }

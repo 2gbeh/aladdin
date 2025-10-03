@@ -6,7 +6,10 @@ public class GetWeatherForecastQueryValidator : AbstractValidator<GetWeatherFore
 {
     public GetWeatherForecastQueryValidator()
     {
-        // No rules needed for now as the query has no inputs.
-        // This exists to demonstrate/verify the validation pipeline is wired up.
+        // Date validation: if provided, ensure it's not the default value
+        // Note: ASP.NET Core model binding will already reject invalid date formats and add a model state error.
+        RuleFor(r => r.Params.Date)
+            .Must(m => !m.HasValue || m.Value != default)
+            .WithMessage("date must be a valid ISO date (yyyy-MM-dd)");
     }
 }
