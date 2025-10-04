@@ -1,8 +1,6 @@
 namespace server.Domain.Common;
 
-public abstract class LookupEntity
+public abstract class LookupEntity : BaseEntity
 {
-    public Guid Id { get; set; }
-    
-    public string Name { get; set; }
+    public string Name { get; set; } = string.Empty;
 }

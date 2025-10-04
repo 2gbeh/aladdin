@@ -33,7 +33,7 @@ npm install --legacy-peer-deps
 # Start the Angular dev server (with hot reload)
 npm start
 
-> http://localhost:4200
+> http://localhost:3000
 ```
 
 ```sh
@@ -52,7 +52,7 @@ dotnet tool install --global dotnet-ef
 # Run the web server with hot reload
 dotnet watch run
 
-> http://localhost:5288/swagger
+> http://localhost:8000
 ```
 
 ## Documentation

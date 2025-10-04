@@ -1,11 +1,11 @@
 namespace server.Shared.ValueObjects;
 
-public class FileValueObject : IEquatable<FileValueObject>
+public sealed class FileValueObject : IEquatable<FileValueObject>
 {
-    public string Name { get; private init; }
-    public string Url { get; private init; }
+    public string Name { get; private init; } = string.Empty;
+    public string Url { get; private init; } = string.Empty;
     public long Size { get; private init; }
-    public string Type { get; private init; }
+    public string Type { get; private init; } = string.Empty;
 
     private FileValueObject() { }
 

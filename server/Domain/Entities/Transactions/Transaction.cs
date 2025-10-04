@@ -13,7 +13,7 @@ public class Transaction : BaseEntity
     public Guid? ContactId { get; set; }
     public Contact? Contact { get; set; }
 
-    public MoneyValueObject Amount { get; set; }
+    public MoneyValueObject Amount { get; set; } = MoneyValueObject.Create(0, "NGN");
 
     public string? Description { get; set; }
 
