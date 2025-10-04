@@ -12,7 +12,7 @@ public class BudgetDetail : BaseEntity
 
     public string Description { get; set; }
     
-    public DateOnly PaymentDate { get; set; };
+    public DateOnly PaymentDate { get; set; }
 
     // Optional Receipt link
     public Guid? ReceiptId { get; set; }

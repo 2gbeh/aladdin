@@ -1,6 +1,6 @@
 # Aladdin
 
-Personal Finance & Productivity PWA - Angular .NET Core
+Personal Finance & Productivity App (Angular, .NET Core)
 
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue.svg)
 ![C#](https://img.shields.io/badge/CSharp-9.x-239120.svg)

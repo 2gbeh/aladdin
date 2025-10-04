@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using server.Domain.Entities.Transaction;
+using server.Domain.Entities;
 
 namespace server.Infrastructure.Persistence.Configurations;
 

@@ -4,7 +4,7 @@ using server.Shared.ValueObjects;
 
 namespace server.Domain.Entities;
 
-public class Task : BaseEntity
+public class TodoListItem : BaseEntity
 {
     // Required descriptive name of the bill
     public string Name { get; set; } = string.Empty;
@@ -14,6 +14,6 @@ public class Task : BaseEntity
     // JSON string representing an array of (starttime, endtime) tuples, e.g. [["08:00","09:30"],["13:15","14:00"]]
     public string? TimePeriodJson { get; set; }
 
-    public Guid TaskListId { get; set; }
-    public TaskList? TaskList { get; set; }
+    public Guid TodoListId { get; set; }
+    public TodoList? TodoList { get; set; }
 }

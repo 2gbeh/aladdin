@@ -1,10 +1,9 @@
 using MediatR;
 using server.Shared.Dtos;
 using server.Domain.Entities;
+using System.Threading.Tasks;
 
 namespace server.Application.WeatherForecasts.Queries;
-
-public sealed record GetWeatherForecastQuery(WeatherForecastQueryParams Params) : IRequest<IEnumerable<WeatherForecastDto>>;
 
 public sealed class GetWeatherForecastQueryHandler : IRequestHandler<GetWeatherForecastQueryDtos.Request, GetWeatherForecastQueryDtos.Response>
 {

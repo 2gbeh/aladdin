@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using server.Shared.Enums;
+using server.Domain.Entities;
 
 namespace server.Shared.Dtos;
 

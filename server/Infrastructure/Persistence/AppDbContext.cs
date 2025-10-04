@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using server.Domain.Entities.Transaction;
-using server.Domain.Common;
 using server.Domain.Entities;
+using server.Domain.Common;
 
 namespace server.Infrastructure.Persistence;
 

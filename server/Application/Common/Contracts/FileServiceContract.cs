@@ -1,3 +1,7 @@
+using System.Threading;
+using System.Threading.Tasks;
+using server.Shared.ValueObjects;
+
 namespace server.Application.Common.Contracts;
 
 public interface FileUploadServiceContract

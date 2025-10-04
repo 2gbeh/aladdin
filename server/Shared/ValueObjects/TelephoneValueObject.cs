@@ -21,21 +21,21 @@ public sealed record class TelephoneValueObject
             throw new ArgumentException("Telephone cannot be empty", nameof(input));
 
         // Normalize: remove spaces, non‑breaking spaces, hyphens, parentheses
-        var normalized = Regex.Replace(input, "[\u0020\u00A0\-()]", string.Empty);
+        var normalized = Regex.Replace(input, "[\\u0020\\u00A0()\\-]", string.Empty);
 
         // Accept common Nigerian forms and normalize to +234XXXXXXXXXX
         // 1) Local mobile format: 0XXXXXXXXXX (11 digits starting with 0)
-        if (Regex.IsMatch(normalized, "^0\d{10}$"))
+        if (Regex.IsMatch(normalized, "^0\\d{10}$"))
         {
             normalized = "+234" + normalized.Substring(1);
         }
         // 2) International without plus: 234XXXXXXXXXX
-        else if (Regex.IsMatch(normalized, "^234\d{10}$"))
+        else if (Regex.IsMatch(normalized, "^234\\d{10}$"))
         {
             normalized = "+" + normalized;
         }
         // 3) Already E.164: +234XXXXXXXXXX (validate later)
-        else if (Regex.IsMatch(normalized, "^\+234\d{10}$"))
+        else if (Regex.IsMatch(normalized, "^\\+234\\d{10}$"))
         {
             // ok as-is
         }
@@ -45,7 +45,7 @@ public sealed record class TelephoneValueObject
         }
 
         // Final validation: +234 followed by 10 digits
-        if (!Regex.IsMatch(normalized, "^\+234\d{10}$"))
+        if (!Regex.IsMatch(normalized, "^\\+234\\d{10}$"))
             throw new ArgumentException("Telephone must be in Nigerian E.164 format: +234XXXXXXXXXX", nameof(input));
 
         return new TelephoneValueObject(normalized);

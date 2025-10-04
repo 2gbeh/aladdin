@@ -1,6 +1,6 @@
 using AutoMapper;
 using System.Linq;
-using server.Domain.Entities.Transaction;
+using server.Domain.Entities;
 using server.Shared.Dtos;
 
 namespace server.Application.Transactions.Profiles;

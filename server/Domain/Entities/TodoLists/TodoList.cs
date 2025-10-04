@@ -4,7 +4,7 @@ using server.Shared.ValueObjects;
 
 namespace server.Domain.Entities;
 
-public class TaskList : BaseEntity
+public class TodoList : BaseEntity
 {
     // Required descriptive name of the bill
     public string Name { get; set; } = string.Empty;
@@ -13,5 +13,5 @@ public class TaskList : BaseEntity
 
     public DateOnly? Date { get; set; }
 
-    public ICollection<Task> Tasks { get; set; } = new List<Task>();
+    public ICollection<TodoListItem> Items { get; set; } = new List<TodoListItem>();
 }

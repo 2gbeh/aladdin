@@ -1,8 +1,12 @@
-namespace Infrastructure.Persistence.Seed;
+using System.Linq;
+using server.Domain.Entities;
+using server.Infrastructure.Persistence;
+
+namespace server.Infrastructure.Persistence.Seeders;
 
 public static class TransactionTagSeeder
 {
-    public static void Seed(ApplicationDbContext context)
+    public static void Seed(AppDbContext context)
     {
         if (!context.TransactionTags.Any())
         {

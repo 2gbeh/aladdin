@@ -20,7 +20,7 @@ public class ContactConfiguration : IEntityTypeConfiguration<Contact>
             .HasMaxLength(128)
             .IsRequired(false);
 
-        builder.Property(a => a.AvatarUrl)
+        builder.Property(a => a.ImageUrl)
             .HasMaxLength(512)
             .IsRequired(false);
 

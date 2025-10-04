@@ -1,6 +1,6 @@
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using server.Domain.Common;
-using server.Shared.Enums;
 using server.Domain.Entities;
 using server.Shared.ValueObjects;
 
@@ -24,7 +24,7 @@ public class Transaction : BaseEntity
     
     public TransactionStatusEnum Status { get; set; } = TransactionStatusEnum.Fulfilled;
 
-    public DateOnly PaymentDate { get; set; };
+    public DateOnly PaymentDate { get; set; }
 
     // Optional Receipt link
     public Guid? ReceiptId { get; set; }

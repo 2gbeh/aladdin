@@ -1,4 +1,7 @@
-namespace server.Api.Common.Routing;
+using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.Routing;
+
+namespace server.Api.Common.Transformers;
 
 public sealed class SlugifyParameterTransformer : IOutboundParameterTransformer
 {

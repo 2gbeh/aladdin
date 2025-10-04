@@ -6,7 +6,6 @@ C:\Users\User\Documents\www\aladdin\server\bin\Debug\net9.0\server.deps.json
 C:\Users\User\Documents\www\aladdin\server\bin\Debug\net9.0\server.runtimeconfig.json
 C:\Users\User\Documents\www\aladdin\server\bin\Debug\net9.0\server.dll
 C:\Users\User\Documents\www\aladdin\server\bin\Debug\net9.0\server.pdb
-C:\Users\User\Documents\www\aladdin\server\bin\Debug\net9.0\Microsoft.AspNetCore.OpenApi.dll
 C:\Users\User\Documents\www\aladdin\server\bin\Debug\net9.0\Microsoft.OpenApi.dll
 C:\Users\User\Documents\www\aladdin\server\obj\Debug\net9.0\server.csproj.AssemblyReference.cache
 C:\Users\User\Documents\www\aladdin\server\obj\Debug\net9.0\rpswa.dswa.cache.json
@@ -123,3 +122,10 @@ C:\Users\User\Documents\www\aladdin\server\bin\Debug\net9.0\ru\Microsoft.CodeAna
 C:\Users\User\Documents\www\aladdin\server\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
 C:\Users\User\Documents\www\aladdin\server\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
 C:\Users\User\Documents\www\aladdin\server\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Users\User\Documents\www\aladdin\server\bin\Debug\net9.0\server.xml
+C:\Users\User\Documents\www\aladdin\server\bin\Debug\net9.0\AutoMapper.dll
+C:\Users\User\Documents\www\aladdin\server\bin\Debug\net9.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\User\Documents\www\aladdin\server\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\User\Documents\www\aladdin\server\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\User\Documents\www\aladdin\server\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\User\Documents\www\aladdin\server\obj\Debug\net9.0\server.xml

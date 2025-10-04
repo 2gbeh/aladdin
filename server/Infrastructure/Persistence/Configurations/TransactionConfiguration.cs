@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using server.Domain.Entities.Transaction;
 using server.Domain.Entities;
 
 namespace server.Infrastructure.Persistence.Configurations;
@@ -57,13 +56,13 @@ public class TransactionConfiguration : IEntityTypeConfiguration<Transaction>
         // Relationship to Category (optional)
         builder.HasOne(x => x.Category)
             .WithMany()
-            .HasForeignKey(x => x.TransactionCategoryId)
+            .HasForeignKey(x => x.CategoryId)
             .OnDelete(DeleteBehavior.SetNull);
 
         // Indexes for common queries
         builder.HasIndex(x => x.PaymentDate);
         builder.HasIndex(x => x.Status);
-        builder.HasIndex(x => x.TransactionCategoryId);
+        builder.HasIndex(x => x.CategoryId);
 
         // Optional relationship to Receipt
         builder.HasOne(x => x.Receipt)

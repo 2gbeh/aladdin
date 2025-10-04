@@ -1,98 +1,70 @@
+using System.IO;
+using System.Reflection;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.EntityFrameworkCore;
 using server.Api.Common.Conventions;
-using server.Api.Common.Routing;
+using server.Api.Common.Transformers;
 using server.Application.Common.Behaviors;
+using server.Application.Common.Contracts;
 using server.Application.WeatherForecasts.Queries;
 using server.Infrastructure.Persistence;
+using server.Infrastructure.Services;
 using AutoMapper;
-using Microsoft.AspNetCore.OpenApi;
 using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using Swashbuckle.AspNetCore.SwaggerUI;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi(options =>
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(options =>
 {
-    // Enrich the OpenAPI document (metadata + security)
-    options.AddDocumentTransformer((document, context, cancellationToken) =>
+    options.SwaggerDoc("v1", new OpenApiInfo
     {
-        document.Info = new OpenApiInfo
-        {
-            Title = "Aladdin API",
-            Version = "v1",
-            Description = "HTTP API for the Aladdin application (Weather, Transactions, Contacts, Tasks, etc.)",
-            Contact = new OpenApiContact { Name = "Aladdin Team", Url = new Uri("https://example.com"), Email = "support@example.com" },
-            License = new OpenApiLicense { Name = "MIT", Url = new Uri("https://opensource.org/licenses/MIT") }
-        };
+        Title = "Aladdin API",
+        Version = "v1",
+        Description = "Personal Finance & Productivity App (.NET Core)",
+        License = new OpenApiLicense { Name = "MIT", Url = new Uri("https://opensource.org/licenses/MIT") }
+    });
 
-        // Define JWT Bearer security scheme
-        document.Components ??= new OpenApiComponents();
-        document.Components.SecuritySchemes["Bearer"] = new OpenApiSecurityScheme
-        {
-            Type = SecuritySchemeType.Http,
-            Scheme = "bearer",
-            BearerFormat = "JWT",
-            In = ParameterLocation.Header,
-            Name = "Authorization",
-            Description = "JWT Authorization header using the Bearer scheme. Example: 'Authorization: Bearer {token}'"
-        };
-
-        // Set a global server entry (informational)
-        document.Servers = new List<OpenApiServer>
-        {
-            new() { Url = "/", Description = "Default" }
-        };
-
-        return Task.CompletedTask;
+    // Define JWT Bearer security scheme
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Name = "Authorization",
+        Description = "JWT Authorization header using the Bearer scheme. Example: 'Authorization: Bearer {token}'"
     });
 
     // Require Bearer security on operations unless explicitly marked AllowAnonymous
-    options.AddOperationTransformer((operation, context, cancellationToken) =>
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
-        var hasAllowAnonymous = context.Description?.ActionDescriptor?.EndpointMetadata
-            ?.Any(m => m?.GetType().Name == "AllowAnonymousAttribute") == true;
-
-        if (!hasAllowAnonymous)
         {
-            operation.Security ??= new List<OpenApiSecurityRequirement>();
-            operation.Security.Add(new OpenApiSecurityRequirement
+            new OpenApiSecurityScheme
             {
-                [ new OpenApiSecurityScheme { Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" } } ] = new List<string>()
-            });
+                Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" }
+            },
+            Array.Empty<string>()
         }
-
-        return Task.CompletedTask;
     });
 
-    // Add standard response codes to all operations if not already present
-    options.AddOperationTransformer((operation, context, cancellationToken) =>
+    // Include XML comments in the Swagger doc
+    var xmlFile = $"{Assembly.GetEntryAssembly()?.GetName().Name}.xml";
+    if (xmlFile != null)
     {
-        operation.Responses ??= new Microsoft.OpenApi.Models.OpenApiResponses();
-
-        void Ensure(string status, string description)
+        var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+        if (File.Exists(xmlPath))
         {
-            if (!operation.Responses.ContainsKey(status))
-            {
-                operation.Responses[status] = new Microsoft.OpenApi.Models.OpenApiResponse
-                {
-                    Description = description
-                };
-            }
+            options.IncludeXmlComments(xmlPath);
         }
-
-        Ensure("400", "Bad request");
-        Ensure("401", "Unauthorized");
-        Ensure("403", "Forbidden");
-        Ensure("404", "Not found");
-        Ensure("500", "Internal server error");
-
-        return Task.CompletedTask;
-    });
+    }
 });
 
 // Add controllers with a global "/api" route prefix and kebab-case route tokens
@@ -106,10 +78,10 @@ builder.Services.AddControllers(options =>
 });
 
 // MediatR registration - scan handlers in the Application assembly
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<GetWeatherForecastQuery>());
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<GetWeatherForecastQueryHandler>());
 
 // FluentValidation - scan validators in the Application assembly
-builder.Services.AddValidatorsFromAssemblyContaining<GetWeatherForecastQuery>();
+builder.Services.AddValidatorsFromAssemblyContaining<GetWeatherForecastQueryHandler>();
 
 // AutoMapper - scan Profiles in the Application assembly
 builder.Services.AddAutoMapper(typeof(server.Application.Transactions.Profiles.TransactionProfile).Assembly);
@@ -136,6 +108,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.Configure<FileUploadOptions>(
     builder.Configuration.GetSection("FileUpload"));
 
+builder.Services.AddScoped<FileUploadServiceContract, FileUploadService>();
 
 var app = builder.Build();
 
@@ -144,13 +117,12 @@ var app = builder.Build();
 var openApiEnabled = app.Configuration.GetValue<bool>("OpenApi:Enabled", app.Environment.IsDevelopment());
 if (openApiEnabled)
 {
-    app.MapOpenApi();
-    app.MapScalarApiReference(options =>
+    app.UseSwagger();
+    app.UseSwaggerUI(options =>
     {
-        options.Title = "Aladdin API";
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "Aladdin API v1");
+        options.RoutePrefix = string.Empty;
     });
-    // Convenience: redirect root to the API docs UI
-    app.MapGet("/", () => Results.Redirect("/scalar/v1"));
 }
 
 app.UseHttpsRedirection();

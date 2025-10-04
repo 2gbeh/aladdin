@@ -1,4 +1,6 @@
-namespace Infrastructure.Persistence.Seed;
+using server.Infrastructure.Persistence;
+
+namespace server.Infrastructure.Persistence.Seeders;
 
 public static class DbSeeder
 {

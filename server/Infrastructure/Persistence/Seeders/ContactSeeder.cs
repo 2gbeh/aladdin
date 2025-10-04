@@ -1,11 +1,12 @@
+using System.Linq;
 using server.Domain.Entities;
 using server.Infrastructure.Persistence;
 
-namespace Infrastructure.Persistence.Seed;
+namespace server.Infrastructure.Persistence.Seeders;
 
 public static class ContactSeeder
 {
-    public static void Seed(AppDbContext context)
+    public static void Seed(server.Infrastructure.Persistence.AppDbContext context)
     {
         if (!context.Contacts.Any())
         {
