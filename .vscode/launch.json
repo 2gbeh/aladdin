@@ -15,22 +15,15 @@
     },
     {
       "name": "Launch Server (.NET)",
-      "type": "coreclr",
+      "type": "node",
       "request": "launch",
-      "preLaunchTask": "Build Server",
-      "program": "${workspaceFolder}/server/bin/Debug/net9.0/server.dll",
-      "args": [],
       "cwd": "${workspaceFolder}/server",
-      "stopAtEntry": false,
-      "serverReadyAction": {
-        "action": "openExternally",
-        "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
-      },
+      "program": "dotnet",
+      "args": ["run"],
       "env": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "console": "integratedTerminal",
-      "internalConsoleOptions": "openOnSessionStart"
+      "console": "integratedTerminal"
     },
     {
       "name": "Debug Client in Chrome",

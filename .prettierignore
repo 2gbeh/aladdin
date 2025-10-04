@@ -1,0 +1,35 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/
+out/
+
+# .NET build outputs
+bin/
+obj/
+
+# Angular
+.angular/
+
+# Coverage reports
+coverage/
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+
+# Git
+.git/
+
+# Temporary files
+*.tmp
+*.temp
