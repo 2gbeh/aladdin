@@ -2,9 +2,9 @@ namespace server.Domain.Entities;
 
 public record WeatherForecast(
     DateOnly Date, 
-    int TemperatureC, 
+    int Celsius, 
     string? Summary
 )
 {
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+    public int Fahrenheit => 32 + (int)(Celsius / 0.5556);
 }

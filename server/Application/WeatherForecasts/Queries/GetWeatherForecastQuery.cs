@@ -18,8 +18,8 @@ public sealed class GetWeatherForecastQueryHandler : IRequestHandler<GetWeatherF
 
         var items = forecasts.Select(s => new WeatherForecastDto(
             s.Date,
-            s.TemperatureC,
-            s.TemperatureF,
+            s.Celsius,
+            s.Fahrenheit,
             s.Summary
         ));
 
@@ -41,11 +41,11 @@ public sealed class GetWeatherForecastQueryHandler : IRequestHandler<GetWeatherF
         return Enumerable.Range(0, daysLeft).Select(i =>
         {
             var date = DateOnly.FromDateTime(DateTime.Now.AddDays(i));           
-            var temperatureC = random.Next(-20, 55);           
+            var celsius = random.Next(-20, 55);           
             var s = random.Next(summaries.Length);
             var summary = summaries[s];
 
-            return new WeatherForecast(date, temperatureC, summary);
+            return new WeatherForecast(date, celsius, summary);
         });
     }
 

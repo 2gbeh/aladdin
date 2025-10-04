@@ -1,4 +1,3 @@
-using System.IO;
 using System.Reflection;
 using FluentValidation;
 using MediatR;
@@ -12,10 +11,7 @@ using server.Application.Common.Contracts;
 using server.Application.WeatherForecasts.Queries;
 using server.Infrastructure.Persistence;
 using server.Infrastructure.Services;
-using AutoMapper;
 using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore.SwaggerGen;
-using Swashbuckle.AspNetCore.SwaggerUI;
 
 var builder = WebApplication.CreateBuilder(args);
 

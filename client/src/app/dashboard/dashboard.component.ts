@@ -1,5 +1,4 @@
 import { Component, ViewChild, inject } from '@angular/core';
-import { RouterLink } from '@angular/router';
 // 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
@@ -11,8 +10,7 @@ import { MatSidenav } from '@angular/material/sidenav';
   selector: 'app-dashboard',
   standalone: true,
   imports: [
-    RouterLink,
-    MatToolbarModule,
+        MatToolbarModule,
     MatIconModule,
     MatButtonModule,
     MatSidenavModule
