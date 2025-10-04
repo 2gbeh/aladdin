@@ -23,6 +23,10 @@ public class Bill : BaseEntity
 
     public DateOnly? PaymentDate { get; set; }
 
+    // Optional Receipt link
+    public Guid? ReceiptId { get; set; }
+    public Receipt? Receipt { get; set; }
+
     // Line items making up the bill
     public ICollection<BillDetail> Details { get; set; } = new List<BillDetail>();
 }

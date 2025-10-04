@@ -12,7 +12,7 @@ public class Contact : BaseEntity
 
   public TelephoneValueObject? Telephone { get; set; }
 
-  public string? AvatarUrl { get; set; }
+  public string? ImageUrl { get; set; }
 
   public string DisplayName { get; set; }
 

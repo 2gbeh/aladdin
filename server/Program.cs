@@ -9,12 +9,91 @@ using server.Application.Common.Behaviors;
 using server.Application.WeatherForecasts.Queries;
 using server.Infrastructure.Persistence;
 using AutoMapper;
+using Microsoft.AspNetCore.OpenApi;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+builder.Services.AddOpenApi(options =>
+{
+    // Enrich the OpenAPI document (metadata + security)
+    options.AddDocumentTransformer((document, context, cancellationToken) =>
+    {
+        document.Info = new OpenApiInfo
+        {
+            Title = "Aladdin API",
+            Version = "v1",
+            Description = "HTTP API for the Aladdin application (Weather, Transactions, Contacts, Tasks, etc.)",
+            Contact = new OpenApiContact { Name = "Aladdin Team", Url = new Uri("https://example.com"), Email = "support@example.com" },
+            License = new OpenApiLicense { Name = "MIT", Url = new Uri("https://opensource.org/licenses/MIT") }
+        };
+
+        // Define JWT Bearer security scheme
+        document.Components ??= new OpenApiComponents();
+        document.Components.SecuritySchemes["Bearer"] = new OpenApiSecurityScheme
+        {
+            Type = SecuritySchemeType.Http,
+            Scheme = "bearer",
+            BearerFormat = "JWT",
+            In = ParameterLocation.Header,
+            Name = "Authorization",
+            Description = "JWT Authorization header using the Bearer scheme. Example: 'Authorization: Bearer {token}'"
+        };
+
+        // Set a global server entry (informational)
+        document.Servers = new List<OpenApiServer>
+        {
+            new() { Url = "/", Description = "Default" }
+        };
+
+        return Task.CompletedTask;
+    });
+
+    // Require Bearer security on operations unless explicitly marked AllowAnonymous
+    options.AddOperationTransformer((operation, context, cancellationToken) =>
+    {
+        var hasAllowAnonymous = context.Description?.ActionDescriptor?.EndpointMetadata
+            ?.Any(m => m?.GetType().Name == "AllowAnonymousAttribute") == true;
+
+        if (!hasAllowAnonymous)
+        {
+            operation.Security ??= new List<OpenApiSecurityRequirement>();
+            operation.Security.Add(new OpenApiSecurityRequirement
+            {
+                [ new OpenApiSecurityScheme { Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" } } ] = new List<string>()
+            });
+        }
+
+        return Task.CompletedTask;
+    });
+
+    // Add standard response codes to all operations if not already present
+    options.AddOperationTransformer((operation, context, cancellationToken) =>
+    {
+        operation.Responses ??= new Microsoft.OpenApi.Models.OpenApiResponses();
+
+        void Ensure(string status, string description)
+        {
+            if (!operation.Responses.ContainsKey(status))
+            {
+                operation.Responses[status] = new Microsoft.OpenApi.Models.OpenApiResponse
+                {
+                    Description = description
+                };
+            }
+        }
+
+        Ensure("400", "Bad request");
+        Ensure("401", "Unauthorized");
+        Ensure("403", "Forbidden");
+        Ensure("404", "Not found");
+        Ensure("500", "Internal server error");
+
+        return Task.CompletedTask;
+    });
+});
 
 // Add controllers with a global "/api" route prefix and kebab-case route tokens
 builder.Services.AddControllers(options =>
@@ -54,12 +133,24 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     });
 });
 
+builder.Services.Configure<FileUploadOptions>(
+    builder.Configuration.GetSection("FileUpload"));
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+// Restrict API docs in production: enabled by default only in Development.
+var openApiEnabled = app.Configuration.GetValue<bool>("OpenApi:Enabled", app.Environment.IsDevelopment());
+if (openApiEnabled)
 {
     app.MapOpenApi();
+    app.MapScalarApiReference(options =>
+    {
+        options.Title = "Aladdin API";
+    });
+    // Convenience: redirect root to the API docs UI
+    app.MapGet("/", () => Results.Redirect("/scalar/v1"));
 }
 
 app.UseHttpsRedirection();

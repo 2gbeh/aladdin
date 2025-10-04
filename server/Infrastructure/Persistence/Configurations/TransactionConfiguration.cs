@@ -65,6 +65,14 @@ public class TransactionConfiguration : IEntityTypeConfiguration<Transaction>
         builder.HasIndex(x => x.Status);
         builder.HasIndex(x => x.TransactionCategoryId);
 
+        // Optional relationship to Receipt
+        builder.HasOne(x => x.Receipt)
+            .WithMany()
+            .HasForeignKey(x => x.ReceiptId)
+            .OnDelete(DeleteBehavior.SetNull);
+
+        builder.HasIndex(x => x.ReceiptId);
+
         // Concurrency token from BaseEntity
         builder.Property(x => x.RowVersion)
             .IsConcurrencyToken()

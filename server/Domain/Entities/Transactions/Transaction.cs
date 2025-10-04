@@ -25,6 +25,10 @@ public class Transaction : BaseEntity
     public TransactionStatusEnum Status { get; set; } = TransactionStatusEnum.Fulfilled;
 
     public DateOnly PaymentDate { get; set; };
+
+    // Optional Receipt link
+    public Guid? ReceiptId { get; set; }
+    public Receipt? Receipt { get; set; }
 }
 
 public enum TransactionTypeEnum

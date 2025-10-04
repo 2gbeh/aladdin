@@ -15,6 +15,9 @@ public class AppDbContext : DbContext
     public DbSet<TransactionCategory> TransactionCategories => Set<TransactionCategory>();
     public DbSet<TransactionTag> TransactionTags => Set<TransactionTag>();
     public DbSet<Contact> Contacts => Set<Contact>();
+    public DbSet<Receipt> Receipts => Set<Receipt>();
+    public DbSet<Bill> Bills => Set<Bill>();
+    public DbSet<BudgetDetail> BudgetDetails => Set<BudgetDetail>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
