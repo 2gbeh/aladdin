@@ -8,6 +8,7 @@ using server.Api.Common.Routing;
 using server.Application.Common.Behaviors;
 using server.Application.WeatherForecasts.Queries;
 using server.Infrastructure.Persistence;
+using AutoMapper;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,6 +31,9 @@ builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<Ge
 
 // FluentValidation - scan validators in the Application assembly
 builder.Services.AddValidatorsFromAssemblyContaining<GetWeatherForecastQuery>();
+
+// AutoMapper - scan Profiles in the Application assembly
+builder.Services.AddAutoMapper(typeof(server.Application.Transactions.Profiles.TransactionProfile).Assembly);
 
 // MediatR Pipeline Behaviors
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));

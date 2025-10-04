@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using server.Domain.Entities.Transaction;
+using server.Domain.Entities;
 
 namespace server.Infrastructure.Persistence.Configurations;
 
@@ -15,13 +16,28 @@ public class TransactionConfiguration : IEntityTypeConfiguration<Transaction>
         builder.Property(x => x.Type)
             .IsRequired();
 
-        builder.Property(x => x.SenderBeneficiary)
-            .HasMaxLength(256)
-            .IsRequired();
+        // Contact (optional)
+        builder.HasOne(t => t.Contact)
+            .WithMany(c => c.Transactions)
+            .HasForeignKey(t => t.ContactId)
+            .OnDelete(DeleteBehavior.SetNull);
 
-        builder.Property(x => x.Amount)
-            .HasPrecision(18, 2)
-            .IsRequired();
+        // Index for common lookups by contact
+        builder.HasIndex(t => t.ContactId);
+
+        // Amount as owned value object (MoneyValueObject)
+        builder.OwnsOne(t => t.Amount, mv =>
+        {
+            mv.Property(p => p.Amount)
+              .HasColumnName("Amount")
+              .HasPrecision(18, 2)
+              .IsRequired();
+
+            mv.Property(p => p.Currency)
+              .HasColumnName("Currency")
+              .HasMaxLength(3)
+              .IsRequired();
+        });
 
         builder.Property(x => x.Description)
             .HasMaxLength(1024);
@@ -32,7 +48,6 @@ public class TransactionConfiguration : IEntityTypeConfiguration<Transaction>
         builder.Property(x => x.PaymentDate)
             .IsRequired();
 
-        // Removed old JSON mapping for string-based tags; now tags are a many-to-many with TransactionTag
         // Many-to-many between Transaction and TransactionTag with explicit join table name
         builder
             .HasMany(t => t.Tags)

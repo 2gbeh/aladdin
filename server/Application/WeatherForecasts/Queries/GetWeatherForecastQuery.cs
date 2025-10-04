@@ -6,9 +6,9 @@ namespace server.Application.WeatherForecasts.Queries;
 
 public sealed record GetWeatherForecastQuery(WeatherForecastQueryParams Params) : IRequest<IEnumerable<WeatherForecastDto>>;
 
-public sealed class GetWeatherForecastQueryHandler : IRequestHandler<GetWeatherForecastQuery, IEnumerable<WeatherForecastDto>>
+public sealed class GetWeatherForecastQueryHandler : IRequestHandler<GetWeatherForecastQueryDtos.Request, GetWeatherForecastQueryDtos.Response>
 {
-    public Task<IEnumerable<WeatherForecastDto>> Handle(GetWeatherForecastQuery req, CancellationToken cancellationToken)
+    public Task<GetWeatherForecastQueryDtos.Response> Handle(GetWeatherForecastQueryDtos.Request req, CancellationToken cancellationToken)
     {
         var forecasts = GenerateForecasts();
 
@@ -17,14 +17,15 @@ public sealed class GetWeatherForecastQueryHandler : IRequestHandler<GetWeatherF
             forecasts = forecasts.Where(w => w.Date == req.Params.Date.Value);
         }
 
-        var result = forecasts.Select(s => new WeatherForecastDto(
+        var items = forecasts.Select(s => new WeatherForecastDto(
             s.Date,
             s.TemperatureC,
             s.TemperatureF,
             s.Summary
         ));
 
-        return Task.FromResult(result);
+        var response = new GetWeatherForecastQueryDtos.Response(items);
+        return Task.FromResult(response);
     }
 
     private static IEnumerable<WeatherForecast> GenerateForecasts()

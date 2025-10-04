@@ -2,7 +2,7 @@ using FluentValidation;
 
 namespace server.Application.WeatherForecasts.Queries;
 
-public class GetWeatherForecastQueryValidator : AbstractValidator<GetWeatherForecastQuery>
+public class GetWeatherForecastQueryValidator : AbstractValidator<GetWeatherForecastQueryDtos.Request>
 {
     public GetWeatherForecastQueryValidator()
     {

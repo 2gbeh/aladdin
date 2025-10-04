@@ -8,11 +8,13 @@ public sealed record class MoneyValueObject
     public decimal Amount { get; }
     public string Currency { get; }
 
+    private static readonly CultureInfo NgCulture = CultureInfo.GetCultureInfo("en-NG");
+
     // For EF Core
     private MoneyValueObject()
     {
         Amount = 0m;
-        Currency = "USD";
+        Currency = "NGN"; // Default to Nigerian Naira
     }
 
     private MoneyValueObject(decimal amount, string currency)
@@ -28,7 +30,7 @@ public sealed record class MoneyValueObject
 
         currency = currency.Trim().ToUpperInvariant();
         if (!Regex.IsMatch(currency, "^[A-Z]{3}$"))
-            throw new ArgumentException("Currency must be a 3-letter ISO code (e.g., USD)", nameof(currency));
+            throw new ArgumentException("Currency must be a 3-letter ISO code (e.g., NGN)", nameof(currency));
 
         return new MoneyValueObject(amount, currency);
     }
@@ -47,7 +49,18 @@ public sealed record class MoneyValueObject
 
     public MoneyValueObject Multiply(decimal factor) => new(Amount * factor, Currency);
 
-    public override string ToString() => string.Create(CultureInfo.InvariantCulture, $"{Currency} {Amount:N2}");
+    public override string ToString()
+    {
+        // Use Nigerian locale for number formatting. If NGN, use currency symbol (₦), else show code + localized number.
+        if (string.Equals(Currency, "NGN", StringComparison.Ordinal))
+        {
+            // {0:C2} uses the locale's currency formatting (₦ for en-NG)
+            return string.Format(NgCulture, "{0:C2}", Amount);
+        }
+
+        // Fallback: show currency code and amount with Nigerian numeric formatting
+        return string.Create(NgCulture, $"{Currency} {Amount:N2}");
+    }
 
     private void EnsureSameCurrency(MoneyValueObject other)
     {

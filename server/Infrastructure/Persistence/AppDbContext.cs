@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using server.Domain.Entities.Transaction;
 using server.Domain.Common;
+using server.Domain.Entities;
 
 namespace server.Infrastructure.Persistence;
 
@@ -13,6 +14,7 @@ public class AppDbContext : DbContext
     public DbSet<Transaction> Transactions => Set<Transaction>();
     public DbSet<TransactionCategory> TransactionCategories => Set<TransactionCategory>();
     public DbSet<TransactionTag> TransactionTags => Set<TransactionTag>();
+    public DbSet<Contact> Contacts => Set<Contact>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

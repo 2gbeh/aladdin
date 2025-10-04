@@ -4,7 +4,7 @@ namespace server.Shared.ValueObjects;
 
 public sealed record class TelephoneValueObject
 {
-    // Stored in E.164 format (e.g., +15551234567)
+    // Stored as Nigerian E.164 format: +234XXXXXXXXXX (10 digits after +234)
     public string E164 { get; }
 
     // For EF Core
@@ -20,18 +20,33 @@ public sealed record class TelephoneValueObject
         if (string.IsNullOrWhiteSpace(input))
             throw new ArgumentException("Telephone cannot be empty", nameof(input));
 
-        // Normalize: remove spaces, hyphens, parentheses
+        // Normalize: remove spaces, non‑breaking spaces, hyphens, parentheses
         var normalized = Regex.Replace(input, "[\u0020\u00A0\-()]", string.Empty);
 
-        // Add leading + if missing and looks like digits with country code already present
-        if (!normalized.StartsWith('+') && Regex.IsMatch(normalized, "^\\d{7,15}$"))
+        // Accept common Nigerian forms and normalize to +234XXXXXXXXXX
+        // 1) Local mobile format: 0XXXXXXXXXX (11 digits starting with 0)
+        if (Regex.IsMatch(normalized, "^0\d{10}$"))
+        {
+            normalized = "+234" + normalized.Substring(1);
+        }
+        // 2) International without plus: 234XXXXXXXXXX
+        else if (Regex.IsMatch(normalized, "^234\d{10}$"))
         {
             normalized = "+" + normalized;
         }
+        // 3) Already E.164: +234XXXXXXXXXX (validate later)
+        else if (Regex.IsMatch(normalized, "^\+234\d{10}$"))
+        {
+            // ok as-is
+        }
+        else
+        {
+            throw new ArgumentException("Telephone must be a valid Nigerian number (e.g., 08031234567 or +2348031234567)", nameof(input));
+        }
 
-        // Validate E.164: + followed by 7 to 15 digits
-        if (!Regex.IsMatch(normalized, "^\\+[1-9]\\d{6,14}$"))
-            throw new ArgumentException("Telephone must be in E.164 format (e.g., +15551234567)", nameof(input));
+        // Final validation: +234 followed by 10 digits
+        if (!Regex.IsMatch(normalized, "^\+234\d{10}$"))
+            throw new ArgumentException("Telephone must be in Nigerian E.164 format: +234XXXXXXXXXX", nameof(input));
 
         return new TelephoneValueObject(normalized);
     }

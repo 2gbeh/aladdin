@@ -1,7 +1,7 @@
 using server.Domain.Common;
 using System.Collections.Generic;
 
-namespace server.Domain.Entities.Transaction;
+namespace server.Domain.Entities;
 
 public class TransactionCategory : LookupEntity
 {
