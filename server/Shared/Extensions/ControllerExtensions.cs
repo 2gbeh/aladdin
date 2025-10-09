@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using server.Api.Common.Conventions;
 using server.Api.Common.Transformers;
+using server.Api.Common.Filters;
 
 namespace server.Shared.Extensions;
 
@@ -22,6 +23,10 @@ public static class ControllerExtensions
 
             // hyphenate [controller] and [action] tokens: WeatherForecast -> weather-forecast
             options.Conventions.Add(new RouteTokenTransformerConvention(new SlugifyParameterTransformer()));
+
+            // Add automatic API response wrapping
+            options.Filters.Add<ApiResponseWrapperFilter>();
+            options.Filters.Add<GlobalExceptionFilter>();
         });
 
         return services;

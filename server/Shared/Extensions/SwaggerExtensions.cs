@@ -1,5 +1,6 @@
 using System.Reflection;
 using Microsoft.OpenApi.Models;
+using server.Api.Common.Filters;
 
 namespace server.Shared.Extensions;
 
@@ -57,6 +58,10 @@ public static class SwaggerExtensions
                     options.IncludeXmlComments(xmlPath);
                 }
             }
+
+            // Add date format filters for DateOnly types
+            options.SchemaFilter<SwaggerDateFormatSchemaFilter>();
+            options.OperationFilter<SwaggerDateFormatOperationFilter>();
         });
 
         return services;

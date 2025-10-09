@@ -1,9 +1,13 @@
 using FluentValidation;
 using MediatR;
 using server.Application.Common.Behaviors;
-using server.Application.WeatherForecasts.Queries;
 
 namespace server.Shared.Extensions;
+
+/// <summary>
+/// Marker class to identify the Application assembly for service registration
+/// </summary>
+public class ApplicationAssemblyMarker { }
 
 /// <summary>
 /// Extension methods for configuring application layer services
@@ -15,14 +19,16 @@ public static class ApplicationExtensions
     /// </summary>
     public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
+        var applicationAssembly = typeof(ApplicationAssemblyMarker).Assembly;
+
         // MediatR registration - scan handlers in the Application assembly
-        services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<GetWeatherForecastQueryHandler>());
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(applicationAssembly));
 
         // FluentValidation - scan validators in the Application assembly
-        services.AddValidatorsFromAssemblyContaining<GetWeatherForecastQueryHandler>();
+        services.AddValidatorsFromAssembly(applicationAssembly);
 
         // AutoMapper - scan Profiles in the Application assembly
-        services.AddAutoMapper(typeof(server.Application.Transactions.Profiles.TransactionProfile).Assembly);
+        services.AddAutoMapper(applicationAssembly);
 
         // MediatR Pipeline Behaviors
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));

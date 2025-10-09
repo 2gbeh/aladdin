@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using server.Domain.Entities;
 
 namespace server.Shared.Dtos;
@@ -20,7 +18,7 @@ public sealed record TransactionDto(
 
     string? TransactionCategoryName,
 
-    IEnumerable<LookupItemDto> Tags,
+    IEnumerable<LookupDto> Tags,
 
     TransactionStatusEnum Status,
 

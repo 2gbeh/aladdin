@@ -1,9 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 
-namespace server.Shared.Helpers;
+namespace server.Shared.Utilities;
 
-public static class EnumHelper
+public static class EnumUtil
 {
     public static string GetLabel(this Enum e)
     {

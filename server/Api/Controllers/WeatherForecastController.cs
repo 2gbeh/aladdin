@@ -1,8 +1,8 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using server.Application.WeatherForecasts.Queries;
 using server.Shared.Dtos;
-using Microsoft.AspNetCore.Authorization;
 
 namespace server.Api.Controllers;
 
@@ -19,10 +19,11 @@ public class WeatherForecastController : ControllerBase
 
     [HttpGet]
     [AllowAnonymous]
-    public async Task<ActionResult<IEnumerable<WeatherForecastDto>>> Get([FromQuery] WeatherForecastQueryParams queryParams, CancellationToken cancellationToken)
+    public async Task<IEnumerable<WeatherForecastDto>> GetAll(
+        [FromQuery] GetWeatherForecastQuery request, 
+        CancellationToken cancellationToken
+    )
     {
-        var req = new GetWeatherForecastQueryDtos.Request(queryParams);
-        var result = await _mediator.Send(req, cancellationToken);
-        return Ok(result.Items);
+        return await _mediator.Send(request, cancellationToken);
     }
 }
