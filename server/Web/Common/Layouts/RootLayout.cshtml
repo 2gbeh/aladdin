@@ -1,21 +1,29 @@
-@using server.Shared.Constants
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="@AppConstant.Description" />
+    <link href="styles/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/npm/@@mdi/font@@7.4.47/css/materialdesignicons.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" type="text/css" />
+    <link href="styles/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="styles/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
     <link rel="icon" type="image/png" href="favicon.ico" />
     <title>@ViewData["Title"] | @AppConstant.AppName</title>
 </head>
-<body>
-    <h1>RootLayout</h1>
-    <nav>
-        <ul>
-            <li><a href="/login">Login</a></li>
-            <li><a href="/dashboard">Dashboard</a></li>
-        </ul>
-    </nav>
-    @RenderBody()
-    @await RenderSectionAsync("Scripts", required: false)
+<body class="@ViewBag.ExtendBodyClass">
+@RenderBody()
+
+<script src="lib/jquery/jquery.min.js"></script>
+<script src="lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="lib/metismenu/metisMenu.min.js"></script>
+<script src="lib/simplebar/simplebar.min.js"></script>
+<script src="lib/node-waves/waves.min.js"></script>
+<script src="lib/waypoints/lib/jquery.waypoints.min.js"></script>
+
+@await RenderSectionAsync("Scripts", required: false)
+
+<script src="scripts/app.js"></script>
 </body>
 </html>

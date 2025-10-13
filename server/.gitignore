@@ -6,8 +6,8 @@ out/
 # Rider
 .idea/
 
-# VS Code
-.vscode/
+# VS Code (commented out to allow project-specific settings)
+# .vscode/
 
 # User-specific files
 *.user

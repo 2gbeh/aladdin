@@ -2,7 +2,19 @@
     Layout = "RootLayout";
 }
 
-<div class="dashboard-container">
-    <h2>DashboardLayout</h2>
-    @RenderBody()
+<div id="layout-wrapper">
+    @await Html.PartialAsync("Header")
+    @await Html.PartialAsync("Sidebar")
+
+    <div class="main-content">
+        @RenderBody()
+
+        @await Html.PartialAsync("Footer")
+    </div>
 </div>
+
+@await Html.PartialAsync("Aside")
+
+@section Scripts {
+    @RenderSection("Scripts", required: false)
+}

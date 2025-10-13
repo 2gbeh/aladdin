@@ -1,20 +1,14 @@
 {
   "folders": [
     {
-      "path": "./"
+      "path": ".",
     },
     {
-      "path": "./client"
+      "name": "minible",
+      "path": "../../public_html/minible/src",
     },
-    {
-      "path": "./server"
-    }
   ],
   "settings": {
-    "files.exclude": {
-      "**/node_modules": true,
-      "**/bin": true,
-      "**/obj": true
-    }
-  }
+    "typescript.preferences.includePackageJsonAutoImports": "on",
+  },
 }

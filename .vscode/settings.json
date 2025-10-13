@@ -23,11 +23,5 @@
     "**/obj/**": true,
     "**/dist/**": true,
     "**/.angular/**": true
-  },
-  "typescript.preferences.includePackageJsonAutoImports": "on",
-  "editor.formatOnSave": true,
-  "editor.codeActionsOnSave": {
-    "source.organizeImports": "explicit",
-    "source.fixAll": "explicit"
   }
 }
