@@ -1,6 +1,7 @@
 using System.Reflection;
 using Microsoft.OpenApi.Models;
 using server.Api.Common.Filters;
+using server.Shared.Constants;
 
 namespace server.Shared.Extensions;
 
@@ -19,9 +20,9 @@ public static class SwaggerExtensions
         {
             options.SwaggerDoc("v1", new OpenApiInfo
             {
-                Title = "Aladdin API",
-                Version = "v1",
-                Description = "Personal Finance & Productivity App (.NET Core)",
+                Title = $"{AppConstant.AppName} API",
+                Version = AppConstant.ApiVersion,
+                Description = AppConstant.Description,
                 License = new OpenApiLicense { Name = "MIT", Url = new Uri("https://opensource.org/licenses/MIT") }
             });
 
@@ -79,7 +80,7 @@ public static class SwaggerExtensions
             app.UseSwagger();
             app.UseSwaggerUI(options =>
             {
-                options.SwaggerEndpoint("/swagger/v1/swagger.json", "Aladdin API v1");
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", $"{AppConstant.AppName} API {AppConstant.ApiVersion}");
                 options.RoutePrefix = "swagger";
             });
         }

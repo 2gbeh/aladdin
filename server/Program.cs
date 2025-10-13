@@ -5,8 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container using extension methods
 builder.Services.AddSwaggerDocumentation();
 builder.Services.AddApiControllers();
-// builder.Services.AddCustomRazorPages(builder.Environment);
-builder.Services.AddRazorPages();
+builder.Services.AddRazorPagesWrapper();
 builder.Services.AddApplicationServices();
 builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddFileUploadServices(builder.Configuration);

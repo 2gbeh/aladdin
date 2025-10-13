@@ -1,0 +1,15 @@
+@using server.Shared.Constants
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="favicon.ico" />
+    <title>@ViewData["Title"] - @AppConstant.AppName</title>
+</head>
+<body>
+    <h1>RootLayout</h1>
+    @RenderBody()
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
