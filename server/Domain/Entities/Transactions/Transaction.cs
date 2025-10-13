@@ -1,34 +1,23 @@
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using server.Domain.Common;
-using server.Domain.Entities;
+using server.Shared.Utilities;
 using server.Shared.ValueObjects;
 
 namespace server.Domain.Entities;
 
-public class Transaction : BaseEntity
+public class Transaction : BaseEntityWithContact
 {
-    public TransactionTypeEnum Type { get; set; } = TransactionTypeEnum.Debit;    
-
-    public Guid? ContactId { get; set; }
-    public Contact? Contact { get; set; }
-
-    public MoneyValueObject Amount { get; set; } = MoneyValueObject.Create(0, "NGN");
-
-    public string? Description { get; set; }
-
-    public Guid? CategoryId { get; set; }
+    public TransactionTypeEnum Type { get; set; } = TransactionTypeEnum.Debit;
+    public MoneyValueObject Amount { get; set; } = MoneyValueObject.Create();    
+    public string Description { get; set; }  = "";
+    public DateOnly PaymentDate { get; set; } = DateTimeUtil.TodayDateOnly();
+    public TransactionStatusEnum Status { get; set; } = TransactionStatusEnum.Fulfilled;  
+    // Relationships
+    public Guid CategoryId { get; set; }
     public TransactionCategory? Category { get; set; }
-    
-    public ICollection<TransactionTag> Tags { get; set; } = new List<TransactionTag>();
-    
-    public TransactionStatusEnum Status { get; set; } = TransactionStatusEnum.Fulfilled;
-
-    public DateOnly PaymentDate { get; set; }
-
-    // Optional Receipt link
-    public Guid? ReceiptId { get; set; }
-    public Receipt? Receipt { get; set; }
+    public ICollection<TransactionTag> Tags { get; set; } = [];
+    // public Guid? ReceiptId { get; set; }
+    // public Receipt? Receipt { get; set; }
 }
 
 public enum TransactionTypeEnum

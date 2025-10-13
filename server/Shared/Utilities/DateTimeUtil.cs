@@ -21,4 +21,6 @@ public static class DateTimeUtil
         var daysUntilEndOfWeek = DayOfWeek.Saturday - today;
         return daysUntilEndOfWeek == 0 ? 1 : daysUntilEndOfWeek + 1;
     }
+
+    public static DateOnly TodayDateOnly() => DateOnly.FromDateTime(DateTime.UtcNow);
 }

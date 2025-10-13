@@ -1,6 +1,6 @@
 namespace server.Shared.Dtos;
 
-public sealed record LookupDto(
+public sealed record LookupEntityDto(
     Guid Id,
     string Name
 );

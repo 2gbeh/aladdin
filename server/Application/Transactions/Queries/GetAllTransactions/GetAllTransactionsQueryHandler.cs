@@ -1,82 +1,70 @@
+using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using server.Domain.Entities;
 using server.Infrastructure.Persistence;
 using server.Shared.Dtos;
 
-namespace server.Application.Transactions.Queries.GetAllTransactions;
+namespace server.Application.Transactions.Queries;
 
 public sealed class GetAllTransactionsQueryHandler : IRequestHandler<GetAllTransactionsQuery, IEnumerable<TransactionDto>>
 {
     private readonly AppDbContext _context;
+    private readonly IMapper _mapper;
 
-    public GetAllTransactionsQueryHandler(AppDbContext context)
+    public GetAllTransactionsQueryHandler(AppDbContext context, IMapper mapper)
     {
         _context = context;
+        _mapper = mapper;
     }
 
-    public async Task<IEnumerable<TransactionDto>> Handle(GetAllTransactionsQuery request, CancellationToken cancellationToken)
+    public async Task<IEnumerable<TransactionDto>> Handle(GetAllTransactionsQuery req, CancellationToken ct)
     {
         var query = _context.Transactions
-            .Include(t => t.Contact)
-            .Include(t => t.Category)
-            .Include(t => t.Tags)
+            .Include(i => i.Contact)
+            .Include(i => i.Category)
+            .Include(i => i.Tags)
             .AsQueryable();
 
-        // Apply filters
-        if (!string.IsNullOrWhiteSpace(request.SearchTerm))
-        {
-            query = query.Where(t => 
-                (t.Description != null && t.Description.Contains(request.SearchTerm)) ||
-                (t.Contact != null && t.Contact.Name.Contains(request.SearchTerm)) ||
-                (t.Category != null && t.Category.Name.Contains(request.SearchTerm)));
-        }
+        query = ApplySearchFilter(query, req.SearchTerm);
 
-        if (request.ContactId.HasValue)
-        {
-            query = query.Where(t => t.ContactId == request.ContactId.Value);
-        }
-
-        if (request.CategoryId.HasValue)
-        {
-            query = query.Where(t => t.CategoryId == request.CategoryId.Value);
-        }
-
-        // Apply pagination
-        if (request.Skip.HasValue)
-        {
-            query = query.Skip(request.Skip.Value);
-        }
-
-        if (request.Take.HasValue)
-        {
-            query = query.Take(request.Take.Value);
-        }
+        query = ApplyPagination(query, req.Skip, req.Take);
 
         var transactions = await query
-            .OrderByDescending(t => t.CreatedAt)
-            .ToListAsync(cancellationToken);
+            .OrderByDescending(t => t.PaymentDate)
+            .ToListAsync(ct);
 
-        return transactions.Select(MapToDto);
+        return _mapper.Map<IEnumerable<TransactionDto>>(transactions);
     }
 
-    private static TransactionDto MapToDto(Transaction transaction)
+    private static IQueryable<Transaction> ApplySearchFilter(IQueryable<Transaction> query, string? searchTerm)
     {
-        return new TransactionDto(
-            transaction.Id,
-            transaction.Type,
-            transaction.ContactId,
-            transaction.Contact?.Name,
-            transaction.Contact?.DisplayName,
-            transaction.Amount.Amount,
-            transaction.Amount.Currency,
-            transaction.Description,
-            transaction.Category?.Name,
-            transaction.Tags.Select(tag => new LookupDto(tag.Id, tag.Name)),
-            transaction.Status,
-            transaction.PaymentDate.ToDateTime(TimeOnly.MinValue),
-            transaction.CreatedAt,
-            transaction.UpdatedAt
-        );
+        if (string.IsNullOrWhiteSpace(searchTerm))
+            return query;
+
+        return query.Where(w =>
+            w.Amount.ToString().Contains(searchTerm) ||
+            w.Description.Contains(searchTerm) ||
+            w.PaymentDate.ToString().Contains(searchTerm) ||
+            (w.Category != null && w.Category.Name.Contains(searchTerm)) ||
+            w.Tags.Any(tag => tag.Name.Contains(searchTerm)) ||
+            (w.Contact != null && w.Contact.Name.Contains(searchTerm)) ||
+            w.CreatedAt.ToString().Contains(searchTerm) ||
+            (w.UpdatedAt.HasValue && w.UpdatedAt.Value.ToString().Contains(searchTerm)));
+    }
+
+    private static IQueryable<Transaction> ApplyPagination(IQueryable<Transaction> query, int? skip, int? take)
+    {
+        if (skip.HasValue)
+        {
+            query = query.Skip(skip.Value);
+        }
+
+        if (take.HasValue)
+        {
+            query = query.Take(take.Value);
+        }
+
+        return query;
     }
 }

@@ -1,5 +1,4 @@
 using server.Domain.Common;
-using System.Collections.Generic;
 
 namespace server.Domain.Entities;
 

@@ -1,13 +1,9 @@
 using MediatR;
+using server.Application.Common.Queries;
 using server.Shared.Dtos;
 
-namespace server.Application.Transactions.Queries.GetAllTransactions;
+namespace server.Application.Transactions.Queries;
 
-public sealed record GetAllTransactionsQuery : IRequest<IEnumerable<TransactionDto>>
+public sealed record GetAllTransactionsQuery : BasePagedQuery, IRequest<IEnumerable<TransactionDto>>
 {
-    public int? Skip { get; init; }
-    public int? Take { get; init; }
-    public string? SearchTerm { get; init; }
-    public Guid? ContactId { get; init; }
-    public Guid? CategoryId { get; init; }
 }

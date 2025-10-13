@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using server.Domain.Entities;
 
 namespace server.Domain.Common;
 
@@ -14,4 +15,10 @@ public abstract class BaseEntity
 
     [Timestamp]
     public byte[]? RowVersion { get; set; }
+}
+
+public abstract class BaseEntityWithContact : BaseEntity
+{
+    public Guid ContactId { get; set; }
+    public Contact? Contact { get; set; }
 }

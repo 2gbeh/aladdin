@@ -7,6 +7,7 @@ using server.Shared.Dtos;
 namespace server.Api.Controllers;
 
 [ApiController]
+[AllowAnonymous]
 [Route("[controller]")]
 public class WeatherForecastController : ControllerBase
 {
@@ -18,7 +19,6 @@ public class WeatherForecastController : ControllerBase
     }
 
     [HttpGet]
-    [AllowAnonymous]
     public async Task<IEnumerable<WeatherForecastDto>> GetAll(
         [FromQuery] GetWeatherForecastQuery request, 
         CancellationToken cancellationToken

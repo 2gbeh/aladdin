@@ -1,16 +1,14 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using server.Application.Transactions.Queries.GetAllTransactions;
-using server.Application.Transactions.Queries.GetTransactionById;
-using server.Application.Transactions.Commands.CreateTransaction;
-using server.Application.Transactions.Commands.UpdateTransaction;
-using server.Application.Transactions.Commands.DeleteTransaction;
+using server.Application.Transactions.Queries;
+// using server.Application.Transactions.Commands;
 using server.Shared.Dtos;
 
 namespace server.Api.Controllers;
 
 [ApiController]
+[AllowAnonymous]
 [Route("[controller]")]
 public class TransactionsController : ControllerBase
 {
@@ -22,7 +20,6 @@ public class TransactionsController : ControllerBase
     }
 
     [HttpGet]
-    [AllowAnonymous]
     public async Task<IEnumerable<TransactionDto>> GetAll(
         [FromQuery] GetAllTransactionsQuery request, 
         CancellationToken cancellationToken
@@ -31,65 +28,61 @@ public class TransactionsController : ControllerBase
         return await _mediator.Send(request, cancellationToken);
     }
 
-    [HttpGet("{id:guid}")]
-    [AllowAnonymous]
-    public async Task<ActionResult<TransactionDto>> GetById(
-        Guid id,
-        CancellationToken cancellationToken
-    )
-    {
-        var query = new GetTransactionByIdQuery(id);
-        var result = await _mediator.Send(query, cancellationToken);
+    // [HttpGet("{id:guid}")]
+    // public async Task<ActionResult<TransactionDto>> GetById(
+    //     Guid id,
+    //     CancellationToken cancellationToken
+    // )
+    // {
+    //     var query = new GetTransactionByIdQuery(id);
+    //     var result = await _mediator.Send(query, cancellationToken);
         
-        if (result == null)
-            return NotFound();
+    //     if (result == null)
+    //         return NotFound();
             
-        return Ok(result);
-    }
+    //     return Ok(result);
+    // }
 
-    [HttpPost]
-    [AllowAnonymous]
-    public async Task<ActionResult<TransactionDto>> Create(
-        [FromBody] CreateTransactionCommand request, 
-        CancellationToken cancellationToken
-    )
-    {
-        var result = await _mediator.Send(request, cancellationToken);
-        return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
-    }
+    // [HttpPost]
+    // public async Task<ActionResult<TransactionDto>> Create(
+    //     [FromBody] CreateTransactionCommand request, 
+    //     CancellationToken cancellationToken
+    // )
+    // {
+    //     var result = await _mediator.Send(request, cancellationToken);
+    //     return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
+    // }
 
-    [HttpPut("{id:guid}")]
-    [AllowAnonymous]
-    public async Task<ActionResult<TransactionDto>> Update(
-        Guid id,
-        [FromBody] UpdateTransactionCommand request,
-        CancellationToken cancellationToken
-    )
-    {
-        if (id != request.Id)
-            return BadRequest("ID mismatch");
+    // [HttpPut("{id:guid}")]
+    // public async Task<ActionResult<TransactionDto>> Update(
+    //     Guid id,
+    //     [FromBody] UpdateTransactionCommand request,
+    //     CancellationToken cancellationToken
+    // )
+    // {
+    //     if (id != request.Id)
+    //         return BadRequest("ID mismatch");
             
-        var result = await _mediator.Send(request, cancellationToken);
+    //     var result = await _mediator.Send(request, cancellationToken);
         
-        if (result == null)
-            return NotFound();
+    //     if (result == null)
+    //         return NotFound();
             
-        return Ok(result);
-    }
+    //     return Ok(result);
+    // }
 
-    [HttpDelete("{id:guid}")]
-    [AllowAnonymous]
-    public async Task<IActionResult> Delete(
-        Guid id,
-        CancellationToken cancellationToken
-    )
-    {
-        var command = new DeleteTransactionCommand(id);
-        var result = await _mediator.Send(command, cancellationToken);
+    // [HttpDelete("{id:guid}")]
+    // public async Task<IActionResult> Delete(
+    //     Guid id,
+    //     CancellationToken cancellationToken
+    // )
+    // {
+    //     var command = new DeleteTransactionCommand(id);
+    //     var result = await _mediator.Send(command, cancellationToken);
         
-        if (!result)
-            return NotFound();
+    //     if (!result)
+    //         return NotFound();
             
-        return NoContent();
-    }
+    //     return NoContent();
+    // }
 }

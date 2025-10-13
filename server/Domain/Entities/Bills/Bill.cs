@@ -6,10 +6,6 @@ namespace server.Domain.Entities;
 
 public class Bill : BaseEntity
 {
-    // Required descriptive name of the bill
-    public string Name { get; set; } = string.Empty;
-
-    // Link to Contact (required at domain level; DB FK can be required as well)
     public Guid ContactId { get; set; }
     public Contact? Contact { get; set; }
 

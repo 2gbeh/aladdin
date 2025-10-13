@@ -1,31 +1,29 @@
-using System.Linq;
 using server.Domain.Entities;
-using server.Infrastructure.Persistence;
 
 namespace server.Infrastructure.Persistence.Seeders;
 
 public static class ContactSeeder
 {
-    public static void Seed(server.Infrastructure.Persistence.AppDbContext context)
+    public static void Seed(AppDbContext context)
     {
         if (!context.Contacts.Any())
         {
             context.Contacts.AddRange(
-                new Contact { Name = "Tugbeh Roseline Abieyuwa", DisplayName = "Mom" },
-                new Contact { Name = "Tugbeh Jackson Aisosa", DisplayName = "Jackson" },
-                new Contact { Name = "Sandra Ehiaghe", DisplayName = "The Wife" },
-                new Contact { Name = "Shaka Kelly", DisplayName = "Landlord" },
-                new Contact { Name = "Ummi Shaka", DisplayName = "Landlady" },
-                new Contact { Name = "Austine Aimienota Omoruyi", DisplayName = "Gen. Austine" },
-                new Contact { DisplayName = "Mama Elliot" },
-                new Contact { Name = "Mama Promise 2 Store", DisplayName = "Mama Promise" },
-                new Contact { Name = "Philip Sunday", DisplayName = "Duke Bike" },
-                new Contact { DisplayName = "Corel Ministry Int'l" },
-                new Contact { Name = "Ben Ifeanyi", DisplayName = "Mr Ben" },
-                new Contact { Name = "Victor Okonofua", DisplayName = "Omovics" },
-                new Contact { Name = "Samuel Lawrence Eyak", DisplayName = "Sam Drycleaner" },
-                new Contact { Name = "Friday Ifada", DisplayName = "Arthur Barber" },
-                new Contact { Name = "Bright Omonigho Okolo", DisplayName = "Zino Barber" }
+                new Contact { BusinessName = "Tugbeh Roseline Abieyuwa", Name = "Mom" },
+                new Contact { BusinessName = "Tugbeh Jackson Aisosa", Name = "Jackson" },
+                new Contact { BusinessName = "Sandra Ehiaghe", Name = "The Wife" },
+                new Contact { BusinessName = "Shaka Kelly", Name = "Landlord" },
+                new Contact { BusinessName = "Ummi Shaka", Name = "Landlady" },
+                new Contact { BusinessName = "Austine Aimienota Omoruyi", Name = "Gen. Austine" },
+                new Contact { BusinessName = "Ndidi Loveth Onyemuelosi", Name = "Mama Elliot" },
+                new Contact { BusinessName = "Mama Promise 2 Store", Name = "Mama Promise" },
+                new Contact { BusinessName = "Philip Sunday", Name = "Duke Bike" },
+                new Contact { BusinessName = "Corel Ministry Int'l Inc", Name = "Jubilee Chapel" },
+                new Contact { BusinessName = "Ben Ifeanyi", Name = "Mr Ben" },
+                new Contact { BusinessName = "Victor Okonofua", Name = "Omovics" },
+                new Contact { BusinessName = "Samuel Lawrence Eyak", Name = "Sam Drycleaner" },
+                new Contact { BusinessName = "Friday Ifada", Name = "Arthur Barber" },
+                new Contact { BusinessName = "Bright Omonigho Okolo", Name = "Zino Barber" }
             );
             context.SaveChanges();
         }

@@ -2,29 +2,26 @@ using server.Domain.Entities;
 
 namespace server.Shared.Dtos;
 
-public sealed record TransactionDto(
-    Guid Id,
+public class TransactionDto
+{
+    public TransactionTypeEnum Type { get; set; }
+    public string TypeText => Type.ToString();
+    public decimal Amount { get; set; }
+    public string? Description { get; set; }
+    public DateTime? PaymentDate { get; set; }
+    public TransactionStatusEnum? Status { get; set; }    
+    public string StatusText => Status?.ToString() ?? "";
+    public LookupEntityDto? Category { get; set; }    
+    public IEnumerable<LookupEntityDto>? Tags { get; set; }    
+}
 
-    TransactionTypeEnum Type,
-    
-    Guid? ContactId,
-    string? ContactName,
-    string? ContactDisplayName,
-    
-    decimal Amount,
-    string Currency,
-    
-    string? Description,
+public class TransactionEntityDto : BaseEntityDto
+{
+}
 
-    string? TransactionCategoryName,
+public class TransactionSummaryDto : TransactionDto
+{
+    Guid Id { get; set; }
+    ContactSummaryDto? Contact { get; set; }
 
-    IEnumerable<LookupDto> Tags,
-
-    TransactionStatusEnum Status,
-
-    DateTime PaymentDate,
-
-    DateTime CreatedAt,
-
-    DateTime? UpdatedAt
-);
+}

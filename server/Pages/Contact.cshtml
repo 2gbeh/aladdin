@@ -1,0 +1,44 @@
+@page "/contact"
+@model ContactModel
+@{
+    ViewData["Title"] = "Contact";
+}
+<h1>@ViewData["Title"]</h1>
+
+<address>
+    One Microsoft Way<br />
+    Redmond, WA 98052-6399<br />
+    <abbr title="Phone">P:</abbr>
+    425.555.0100
+</address>
+
+<address>
+    <strong>Support:</strong> <a href="mailto:Support@example.com">Support@example.com</a><br />
+    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
+</address>
+
+<form method="post">
+    <div class="form-group mb-3">
+        <label asp-for="Input.Name" class="form-label"></label>
+        <input asp-for="Input.Name" class="form-control" />
+        <span asp-validation-for="Input.Name" class="text-danger"></span>
+    </div>
+    <div class="form-group mb-3">
+        <label asp-for="Input.Email" class="form-label"></label>
+        <input asp-for="Input.Email" class="form-control" />
+        <span asp-validation-for="Input.Email" class="text-danger"></span>
+    </div>
+    <div class="form-group mb-3">
+        <label asp-for="Input.Message" class="form-label"></label>
+        <textarea asp-for="Input.Message" class="form-control" rows="4"></textarea>
+        <span asp-validation-for="Input.Message" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Send Message</button>
+</form>
+
+@if (Model.MessageSent)
+{
+    <div class="alert alert-success mt-3">
+        Thank you for your message! We'll get back to you soon.
+    </div>
+}

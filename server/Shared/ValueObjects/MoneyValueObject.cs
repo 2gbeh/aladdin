@@ -1,70 +1,29 @@
-using System.Globalization;
-using System.Text.RegularExpressions;
-
 namespace server.Shared.ValueObjects;
 
-public sealed record class MoneyValueObject
+public sealed record MoneyValueObject
 {
-    public decimal Amount { get; }
+    public decimal Value { get; }
     public string Currency { get; }
 
-    private static readonly CultureInfo NgCulture = CultureInfo.GetCultureInfo("en-NG");
-
-    // For EF Core
     private MoneyValueObject()
     {
-        Amount = 0m;
-        Currency = "NGN"; // Default to Nigerian Naira
+        Value = 0m;
+        Currency = "NGN";
     }
 
-    private MoneyValueObject(decimal amount, string currency)
+    private MoneyValueObject(decimal value, string currency = "NGN")
     {
-        Amount = decimal.Round(amount, 2, MidpointRounding.AwayFromZero);
-        Currency = currency;
+        Value = decimal.Round(value, 2, MidpointRounding.AwayFromZero);
+        Currency = currency.ToUpperInvariant();
     }
 
-    public static MoneyValueObject Create(decimal amount, string currency)
+    public static MoneyValueObject Create(decimal value = 0m, string currency = "NGN")
     {
-        if (string.IsNullOrWhiteSpace(currency))
-            throw new ArgumentException("Currency is required", nameof(currency));
-
-        currency = currency.Trim().ToUpperInvariant();
-        if (!Regex.IsMatch(currency, "^[A-Z]{3}$"))
-            throw new ArgumentException("Currency must be a 3-letter ISO code (e.g., NGN)", nameof(currency));
-
-        return new MoneyValueObject(amount, currency);
+        return new MoneyValueObject(value, currency);
     }
-
-    public MoneyValueObject Add(MoneyValueObject other)
-    {
-        EnsureSameCurrency(other);
-        return new MoneyValueObject(Amount + other.Amount, Currency);
-    }
-
-    public MoneyValueObject Subtract(MoneyValueObject other)
-    {
-        EnsureSameCurrency(other);
-        return new MoneyValueObject(Amount - other.Amount, Currency);
-    }
-
-    public MoneyValueObject Multiply(decimal factor) => new(Amount * factor, Currency);
 
     public override string ToString()
     {
-        // Use Nigerian locale for number formatting. If NGN, use currency symbol (₦), else show code + localized number.
-        if (string.Equals(Currency, "NGN", StringComparison.Ordinal))
-        {
-            // {0:C2} uses the locale's currency formatting (₦ for en-NG)
-            return string.Format(NgCulture, "{0:C2}", Amount);
-        }
-
-        // Fallback: show currency code and amount with Nigerian numeric formatting
-        return string.Create(NgCulture, $"{Currency} {Amount:N2}");
-    }
-
-    private void EnsureSameCurrency(MoneyValueObject other)
-    {
-        if (!string.Equals(Currency, other.Currency, StringComparison.Ordinal))
-            throw new InvalidOperationException("Currency mismatch");
+        return Value.ToString("N2");
     }
 }
