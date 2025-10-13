@@ -16,7 +16,6 @@ const name = 'login'
   standalone: true,
   selector: `app-${name}`,
   templateUrl: `./${name}.component.html`,
-  styleUrl: `./${name}.component.scss`,
   imports: [
     RouterLink,
     FormsModule,

@@ -20,7 +20,7 @@
 
 <div class="mb-3">
 <div class="float-end">
-<a href="/forgot-password" class="text-muted">Forgot password?</a>
+<a asp-page="/ForgotPassword/Index" class="text-muted">Forgot password?</a>
 </div>
 <label class="form-label" for="userpassword">Password</label>
 <input type="password" class="form-control" asp-for="FormData.Password" placeholder="Enter password" required />
@@ -64,7 +64,7 @@
 </div>
 
 <div class="mt-4 text-center">
-<p class="mb-0">Don't have an account ? <a href="/register" class="fw-medium text-primary"> Sign up now </a> </p>
+<p class="mb-0">Don't have an account ? <a asp-page="/Register/Index" class="fw-medium text-primary"> Sign up now </a> </p>
 </div>
 </form>
 </div>

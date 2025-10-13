@@ -5,7 +5,6 @@ import { RouterOutlet } from '@angular/router';
   selector: 'app-transactions-layout',
   imports: [RouterOutlet],
   templateUrl: './transactions-layout.component.html',
-  styleUrl: './transactions-layout.component.scss'
 })
 export class TransactionsLayoutComponent {
 
