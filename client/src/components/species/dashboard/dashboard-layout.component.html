@@ -1,18 +1,14 @@
 <div id="layout-wrapper">
-    @await Html.PartialAsync("Header")
-    @await Html.PartialAsync("Sidebar")
+    <app-header/>
+    <app-sidebar/>
 
     <div class="main-content">
         <router-outlet />
-
-        @await Html.PartialAsync("Footer")
+        <app-footer/>
     </div>
 </div>
 
-@await Html.PartialAsync("Aside")
+<app-aside/>
 
-@section Scripts {
-    <script src="lib/metismenu/metisMenu.min.js"></script>
-    <script src="lib/simplebar/simplebar.min.js"></script>
-    @RenderSection("Scripts", required: false)
-}
+<script src="lib/metismenu/metisMenu.min.js"></script>
+<script src="lib/simplebar/simplebar.min.js"></script>

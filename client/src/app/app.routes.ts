@@ -7,6 +7,7 @@ import { LoginComponent } from './login/login.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { DashboardLayoutComponent } from '@/components/species/dashboard/dashboard-layout.component';
 
 export const appRoutes: Routes = [
   transactionsRoute,
@@ -33,8 +34,14 @@ export const appRoutes: Routes = [
   },
   {
     path: PATH.dashboard,
-    component: DashboardComponent,
-    title: 'Dashboard',
+    component: DashboardLayoutComponent,
+    children: [
+      {
+        path: '',
+        component: DashboardComponent,
+        title: 'Dashboard',
+      },
+    ]
   },
   {
     path: '**',
