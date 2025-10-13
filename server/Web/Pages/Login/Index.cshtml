@@ -1,0 +1,22 @@
+@page "/login"
+@model LoginModel
+@{
+    ViewData["Title"] = "Sign in";
+    Layout = "AuthLayout";
+}
+
+<h3>@ViewData["Title"]</h3>
+
+<form method="post">
+<div>
+<input type="email" asp-for="FormData.Email" placeholder="Enter email" required/>
+<span asp-validation-for="FormData.Email"></span>
+</div>
+
+<div>
+<input type="password" asp-for="FormData.Password" placeholder="Enter password" required/>
+<span asp-validation-for="FormData.Password"></span>
+</div>
+
+<div><button type="submit">Log in</button></div>
+</form>

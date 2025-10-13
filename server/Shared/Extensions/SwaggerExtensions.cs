@@ -1,7 +1,6 @@
 using System.Reflection;
 using Microsoft.OpenApi.Models;
 using server.Api.Common.Filters;
-using server.Shared.Constants;
 
 namespace server.Shared.Extensions;
 
