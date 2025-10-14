@@ -1,38 +1,28 @@
-import { Component, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 // 
 import { HeaderComponent } from '@/components/organisms/header/header.component';
 import { SidebarComponent } from '@/components/organisms/sidebar/sidebar.component';
 import { AsideComponent } from '@/components/organisms/aside/aside.component';
 import { FooterComponent } from '@/components/organisms/footer/footer.component';
+import { ScriptLoaderService } from '@/store/services/script-loader.service';
 
 @Component({
   selector: 'app-dashboard-layout',
   imports: [
-    RouterOutlet, 
-    HeaderComponent, 
-    SidebarComponent, 
-    FooterComponent, 
+    RouterOutlet,
+    HeaderComponent,
+    SidebarComponent,
+    FooterComponent,
     AsideComponent
   ],
   templateUrl: './dashboard-layout.component.html',
 })
-export class DashboardLayoutComponent implements AfterViewInit, OnDestroy {
- private scripts: HTMLScriptElement[] = [];
+export class DashboardLayoutComponent implements OnInit {
+  constructor(private scriptLoader: ScriptLoaderService) { }
 
-  ngAfterViewInit() {
-    this.loadScript('lib/metismenu/metisMenu.min.js');
-    this.loadScript('lib/simplebar/simplebar.min.js');
-  }
-
-  private loadScript(src: string) {
-    const script = document.createElement('script');
-    script.src = src;
-    document.body.appendChild(script);
-    this.scripts.push(script);
-  }
-
-  ngOnDestroy() {
-    this.scripts.forEach(script => script.remove());
+  async ngOnInit() {
+    await this.scriptLoader.loadScript('libs/metismenu/metisMenu.min.js');
+    await this.scriptLoader.loadScript('libs/simplebar/simplebar.min.js');
   }
 }
