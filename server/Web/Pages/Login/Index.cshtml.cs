@@ -46,7 +46,7 @@ namespace server.Web.Pages
             } else
             {
                 FormData = new LoginSchema();
-                return RedirectToPage("/Dashboard/Index", new { onboarding = false });
+                return RedirectToPage("/Dashboard/Index", new { Onboarding = false });
             }
             
         }

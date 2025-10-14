@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, AfterViewInit, OnDestroy } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 // 
 import { HeaderComponent } from '@/components/organisms/header/header.component';
@@ -17,6 +17,22 @@ import { FooterComponent } from '@/components/organisms/footer/footer.component'
   ],
   templateUrl: './dashboard-layout.component.html',
 })
-export class DashboardLayoutComponent {
+export class DashboardLayoutComponent implements AfterViewInit, OnDestroy {
+ private scripts: HTMLScriptElement[] = [];
 
+  ngAfterViewInit() {
+    this.loadScript('lib/metismenu/metisMenu.min.js');
+    this.loadScript('lib/simplebar/simplebar.min.js');
+  }
+
+  private loadScript(src: string) {
+    const script = document.createElement('script');
+    script.src = src;
+    document.body.appendChild(script);
+    this.scripts.push(script);
+  }
+
+  ngOnDestroy() {
+    this.scripts.forEach(script => script.remove());
+  }
 }

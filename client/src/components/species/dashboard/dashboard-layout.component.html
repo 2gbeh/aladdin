@@ -10,5 +10,9 @@
 
 <app-aside/>
 
-<script src="lib/metismenu/metisMenu.min.js"></script>
-<script src="lib/simplebar/simplebar.min.js"></script>
+<ng-content select="[scripts]"></ng-content>
+<!-- @section Scripts {
+    <script src="lib/metismenu/metisMenu.min.js"></script>
+    <script src="lib/simplebar/simplebar.min.js"></script>
+    @RenderSection("Scripts", required: false)
+} -->

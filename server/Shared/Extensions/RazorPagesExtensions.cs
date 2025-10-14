@@ -13,9 +13,16 @@ public static class RazorPagesExtensions
     /// </summary>
     public static IServiceCollection AddRazorPagesWrapper(this IServiceCollection services)
     {
+        services.AddRouting(options =>
+        {
+            options.LowercaseUrls = true;
+            options.LowercaseQueryStrings = true; // optional
+        });
+
         services.AddRazorPages(options =>
         {
             options.RootDirectory = "/Web/Pages";
+            options.Conventions.AddPageRoute("/Login/Index", "");
         }).AddRazorOptions(options =>
         {
             options.ViewLocationExpanders.Add(new CommonViewLocationExpander());

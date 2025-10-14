@@ -1,4 +1,4 @@
-import {  Component, provideZoneChangeDetection } from '@angular/core';
+import { Component, provideZoneChangeDetection } from '@angular/core';
 import { provideHttpClient } from '@angular/common/http';
 import { RouterOutlet, provideRouter, TitleStrategy, withComponentInputBinding } from '@angular/router';
 import { bootstrapApplication } from '@angular/platform-browser';
@@ -9,7 +9,7 @@ import { appRoutes } from './app/app.routes';
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet],
-  template: `<router-outlet />`,
+  template: `<router-outlet/>`,
 })
 class AppComponent {
 }
