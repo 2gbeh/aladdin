@@ -1,9 +1,4 @@
-@use 'theme.style' as *;
-@use 'dimension.style' as *;
-@use 'typography.style' as *;
-@use 'flex.style' as *;
-@use 'grid.style' as *;
-@use 'material.style' as *;
+@use 'template' as *;
 
 * {
   box-sizing: border-box;

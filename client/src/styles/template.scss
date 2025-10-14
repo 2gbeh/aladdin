@@ -1,0 +1,9 @@
+// Fix for footer positioning
+.main-content {
+  position: relative;
+  min-height: 100vh;
+}
+
+.footer {
+  margin-left: -250px;
+}
