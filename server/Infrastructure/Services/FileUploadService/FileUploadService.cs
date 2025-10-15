@@ -1,8 +1,7 @@
 using Microsoft.Extensions.Options;
-using server.Application.Common.Contracts;
 using server.Domain.ValueObjects;
 
-namespace server.Infrastructure.Services;
+namespace server.Infrastructure.Services.FileUploadService;
 
 public class FileUploadOptions
 {
@@ -10,7 +9,7 @@ public class FileUploadOptions
     public string[] AllowedTypes { get; set; } = new[] { "image/png", "image/jpeg", "application/pdf" };
 }
 
-public class FileUploadService : FileUploadServiceContract
+public class FileUploadService : IFileUploadService
 {
     private readonly FileUploadOptions _options;
 

@@ -1,8 +1,8 @@
 using server.Domain.ValueObjects;
 
-namespace server.Application.Common.Contracts;
+namespace server.Infrastructure.Services.FileUploadService;
 
-public interface FileUploadServiceContract
+public interface IFileUploadService
 {
     Task<string> UploadAsync(FileValueObject vo, CancellationToken ct);
 
