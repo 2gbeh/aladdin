@@ -18,6 +18,6 @@ public abstract class BaseEntity
 
 public abstract class BaseEntityWithContact : BaseEntity
 {
-    public Guid ContactId { get; set; }
+    public Guid? ContactId { get; set; }
     public Contact? Contact { get; set; }
 }

@@ -13,7 +13,7 @@ public class Transaction : BaseEntityWithContact
     public DateOnly PaymentDate { get; set; } = DateTimeUtil.TodayDateOnly();
     public TransactionStatusEnum Status { get; set; } = TransactionStatusEnum.Fulfilled;  
     // Relationships
-    public Guid CategoryId { get; set; }
+    public Guid? CategoryId { get; set; }
     public TransactionCategory? Category { get; set; }
     public ICollection<TransactionTag> Tags { get; set; } = [];
     // public Guid? ReceiptId { get; set; }
@@ -31,11 +31,11 @@ public enum TransactionTypeEnum
 
 public enum TransactionStatusEnum
 {
-    [Display(Name = "pending")]
-    Pending,
-
     [Display(Name = "fulfilled")]
     Fulfilled,
+    
+    [Display(Name = "pending")]
+    Pending,
 
     [Display(Name = "hidden")]
     Hidden,

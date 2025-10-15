@@ -1,5 +1,4 @@
-using server.Application.Common.Contracts;
-using server.Infrastructure.Services;
+using server.Infrastructure.Services.FileUploadService;
 
 namespace server.Shared.Extensions;
 
@@ -14,7 +13,7 @@ public static class FileUploadExtensions
     public static IServiceCollection AddFileUploadServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.Configure<FileUploadOptions>(configuration.GetSection("FileUpload"));
-        services.AddScoped<FileUploadServiceContract, FileUploadService>();
+        services.AddScoped<IFileUploadService, FileUploadService>();
 
         return services;
     }

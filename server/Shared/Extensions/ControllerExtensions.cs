@@ -25,7 +25,7 @@ public static class ControllerExtensions
             options.Conventions.Add(new RouteTokenTransformerConvention(new SlugifyParameterTransformer()));
 
             // Add automatic API response wrapping
-            options.Filters.Add<ApiResponseWrapperFilter>();
+            // options.Filters.Add<ApiResponseWrapperFilter>();
             options.Filters.Add<GlobalExceptionFilter>();
         });
 

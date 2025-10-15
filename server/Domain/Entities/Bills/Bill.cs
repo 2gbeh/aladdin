@@ -1,4 +1,3 @@
-using server.Domain.Entities.Shared;
 using server.Domain.ValueObjects;
 
 namespace server.Domain.Entities;

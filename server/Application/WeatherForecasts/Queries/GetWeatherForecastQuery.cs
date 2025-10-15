@@ -4,9 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace server.Application.WeatherForecasts.Queries;
 
-public sealed class GetWeatherForecastQueryDto : List<WeatherForecastDto>
-{
-}
+public sealed class GetWeatherForecastQueryDto : List<WeatherForecastDto> { }
 
 public sealed record GetWeatherForecastQuery(
     [DataType(DataType.Date)]

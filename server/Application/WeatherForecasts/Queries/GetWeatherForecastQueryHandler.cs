@@ -23,7 +23,6 @@ public sealed class GetWeatherForecastQueryHandler : IGetWeatherForecastQueryHan
         }
 
         var result = _mapper.Map<GetWeatherForecastQueryDto>(forecasts);
-
         return Task.FromResult(result);
     }
 
