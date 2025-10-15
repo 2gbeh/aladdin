@@ -1,6 +1,4 @@
-using System.Linq;
 using server.Domain.Entities;
-using server.Infrastructure.Persistence;
 
 namespace server.Infrastructure.Persistence.Seeders;
 
@@ -24,7 +22,7 @@ public static class TransactionCategorySeeder
                 new TransactionCategory { Name = "Loan" },
                 new TransactionCategory { Name = "Support" },
                 new TransactionCategory { Name = "Emergency" },
-                new TransactionCategory { Name = "Frivolos" },
+                new TransactionCategory { Name = "Frivolous" },
                 new TransactionCategory { Name = "Misc" }
             );
             context.SaveChanges();

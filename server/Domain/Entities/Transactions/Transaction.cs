@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
-using server.Domain.Common;
+
+using server.Domain.ValueObjects;
 using server.Shared.Utilities;
-using server.Shared.ValueObjects;
 
 namespace server.Domain.Entities;
 

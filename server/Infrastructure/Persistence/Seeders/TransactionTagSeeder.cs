@@ -1,6 +1,4 @@
-using System.Linq;
 using server.Domain.Entities;
-using server.Infrastructure.Persistence;
 
 namespace server.Infrastructure.Persistence.Seeders;
 

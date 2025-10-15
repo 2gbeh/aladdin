@@ -1,9 +1,8 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using server.Application.Transactions.Queries;
+using server.Application.Transactions.Queries.GetAllTransactions;
 // using server.Application.Transactions.Commands;
-using server.Shared.Dtos;
 
 namespace server.Api.Controllers;
 
@@ -20,7 +19,7 @@ public class TransactionsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IEnumerable<TransactionDto>> GetAll(
+    public async Task<GetAllTransactionsDto> GetAll(
         [FromQuery] GetAllTransactionsQuery request, 
         CancellationToken cancellationToken
     )

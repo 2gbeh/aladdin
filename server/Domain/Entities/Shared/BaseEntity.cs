@@ -1,7 +1,6 @@
 using System.ComponentModel.DataAnnotations;
-using server.Domain.Entities;
 
-namespace server.Domain.Common;
+namespace server.Domain.Entities;
 
 public abstract class BaseEntity
 {

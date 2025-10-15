@@ -1,13 +1,11 @@
 using AutoMapper;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
 using server.Domain.Entities;
 using server.Infrastructure.Persistence;
-using server.Shared.Dtos;
 
-namespace server.Application.Transactions.Queries;
+namespace server.Application.Transactions.Queries.GetAllTransactions;
 
-public sealed class GetAllTransactionsQueryHandler : IRequestHandler<GetAllTransactionsQuery, IEnumerable<TransactionDto>>
+public sealed class GetAllTransactionsQueryHandler : IGetAllTransactionsQueryHandler
 {
     private readonly AppDbContext _context;
     private readonly IMapper _mapper;
@@ -18,7 +16,7 @@ public sealed class GetAllTransactionsQueryHandler : IRequestHandler<GetAllTrans
         _mapper = mapper;
     }
 
-    public async Task<IEnumerable<TransactionDto>> Handle(GetAllTransactionsQuery req, CancellationToken ct)
+    public async Task<GetAllTransactionsDto> Handle(GetAllTransactionsQuery req, CancellationToken ct)
     {
         var query = _context.Transactions
             .Include(i => i.Contact)
@@ -30,11 +28,11 @@ public sealed class GetAllTransactionsQueryHandler : IRequestHandler<GetAllTrans
 
         query = ApplyPagination(query, req.Skip, req.Take);
 
-        var transactions = await query
+        var result = await query
             .OrderByDescending(t => t.PaymentDate)
             .ToListAsync(ct);
 
-        return _mapper.Map<IEnumerable<TransactionDto>>(transactions);
+        return _mapper.Map<GetAllTransactionsDto>(result);
     }
 
     private static IQueryable<Transaction> ApplySearchFilter(IQueryable<Transaction> query, string? searchTerm)

@@ -2,7 +2,6 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using server.Application.WeatherForecasts.Queries;
-using server.Shared.Dtos;
 
 namespace server.Api.Controllers;
 
@@ -19,7 +18,7 @@ public class WeatherForecastController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IEnumerable<WeatherForecastDto>> GetAll(
+    public async Task<GetWeatherForecastQueryDto> GetAll(
         [FromQuery] GetWeatherForecastQuery request, 
         CancellationToken cancellationToken
     )

@@ -1,9 +1,15 @@
 using MediatR;
 using server.Application.Common.Queries;
-using server.Shared.Dtos;
+using server.Application.Common.Dtos;
 
-namespace server.Application.Transactions.Queries;
+namespace server.Application.Transactions.Queries.GetAllTransactions;
 
-public sealed record GetAllTransactionsQuery : BasePagedQuery, IRequest<IEnumerable<TransactionDto>>
+public sealed class GetAllTransactionsDto : List<TransactionEntityDto>
 {
 }
+
+public sealed record GetAllTransactionsQuery : BasePagedQuery, IRequest<GetAllTransactionsDto>
+{
+}
+
+public interface IGetAllTransactionsQueryHandler : IRequestHandler<GetAllTransactionsQuery, GetAllTransactionsDto> { }

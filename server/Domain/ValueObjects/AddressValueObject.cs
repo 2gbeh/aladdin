@@ -1,4 +1,4 @@
-namespace server.Shared.ValueObjects;
+namespace server.Domain.ValueObjects;
 
 public sealed record class AddressValueObject
 {

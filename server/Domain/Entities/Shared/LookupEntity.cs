@@ -1,4 +1,4 @@
-namespace server.Domain.Common;
+namespace server.Domain.Entities;
 
 public abstract class LookupEntity : BaseEntity
 {

@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 
-namespace server.Shared.ValueObjects;
+namespace server.Domain.ValueObjects;
 
 public sealed record class EmailValueObject
 {

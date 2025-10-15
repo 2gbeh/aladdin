@@ -1,11 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using server.Domain.Common;
+
 using server.Domain.Entities;
-using server.Shared.ValueObjects;
+using server.Domain.ValueObjects;
 using System.Linq.Expressions;
 
-namespace server.Infrastructure.Common;
+namespace server.Infrastructure.Persistence.Configurations;
 
 public abstract class BaseConfiguration<T> : IEntityTypeConfiguration<T> where T : BaseEntity
 {

@@ -1,13 +1,19 @@
-using MediatR;
+using AutoMapper;
 using server.Domain.Entities;
-using server.Shared.Dtos;
 using server.Shared.Utilities;
 
 namespace server.Application.WeatherForecasts.Queries;
 
-public sealed class GetWeatherForecastQueryHandler : IRequestHandler<GetWeatherForecastQuery, IEnumerable<WeatherForecastDto>>
+public sealed class GetWeatherForecastQueryHandler : IGetWeatherForecastQueryHandler
 {
-    public Task<IEnumerable<WeatherForecastDto>> Handle(GetWeatherForecastQuery req, CancellationToken ct)
+    private readonly IMapper _mapper;
+
+    public GetWeatherForecastQueryHandler(IMapper mapper)
+    {
+        _mapper = mapper;
+    }
+
+    public Task<GetWeatherForecastQueryDto> Handle(GetWeatherForecastQuery req, CancellationToken ct)
     {
         var forecasts = GenerateForecasts();
 
@@ -16,12 +22,7 @@ public sealed class GetWeatherForecastQueryHandler : IRequestHandler<GetWeatherF
             forecasts = forecasts.Where(w => w.Date == req.Date.Value);
         }
 
-        var result = forecasts.Select(f => new WeatherForecastDto(
-            f.Date,
-            f.Celsius,
-            f.Fahrenheit,
-            f.Summary
-        ));
+        var result = _mapper.Map<GetWeatherForecastQueryDto>(forecasts);
 
         return Task.FromResult(result);
     }
@@ -44,7 +45,7 @@ public sealed class GetWeatherForecastQueryHandler : IRequestHandler<GetWeatherF
             var s = random.Next(summaries.Length);
             var summary = summaries[s];
 
-            return new WeatherForecast(date, celsius, summary);
+            return new WeatherForecast { Date = date, Celsius = celsius, Summary = summary };
         });
     }
 

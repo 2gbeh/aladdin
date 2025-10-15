@@ -1,5 +1,5 @@
-using server.Domain.Common;
-using server.Shared.ValueObjects;
+
+using server.Domain.ValueObjects;
 
 namespace server.Domain.Entities;
 
